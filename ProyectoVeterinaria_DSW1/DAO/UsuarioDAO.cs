@@ -58,25 +58,28 @@ namespace ProyectoVeterinaria_DSW1.DAO
             throw new NotImplementedException();
         }
 
-        public int ObtenerID(Usuario objeto)
+        public int InsertarUsuario(Usuario objeto)
         {
-            int idGenerado = 0;
-
-            using (SqlConnection cn = new SqlConnection(cadena))
+            try
             {
-                using(SqlCommand cmd=new SqlCommand("sp_insertar_usuario", cn))
+                using (SqlConnection cn = new SqlConnection(cadena))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@email", objeto.email);
-                    cmd.Parameters.AddWithValue("@password", objeto.password);
-                    cmd.Parameters.AddWithValue("@idrol", objeto.idrol);
+                    using (SqlCommand cmd = new SqlCommand("sp_insertar_usuario", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@email", objeto.email);
+                        cmd.Parameters.AddWithValue("@password", objeto.password);
+                        cmd.Parameters.AddWithValue("@idrol", objeto.idrol);
 
-                    cn.Open();
-                    idGenerado = Convert.ToInt32(cmd.ExecuteScalar()); //id
+                        cn.Open();
+                        return Convert.ToInt32(cmd.ExecuteScalar());
+                    }
                 }
             }
-
-            return idGenerado;
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

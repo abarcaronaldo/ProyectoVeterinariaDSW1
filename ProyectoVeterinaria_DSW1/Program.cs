@@ -8,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUsuario, UsuarioDAO>();
 builder.Services.AddScoped<IDueno, DuenoDAO>();
+builder.Services.AddScoped<IVeterinario, VeterinarioDAO>();
 builder.Services.AddScoped<DuenoService>();
+builder.Services.AddScoped<VeterinarioService>();
 builder.Services.AddScoped<UsuarioService>();
 
 //sesion

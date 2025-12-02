@@ -66,11 +66,11 @@ namespace ProyectoVeterinaria_DSW1.Controllers
 
         public async Task<IActionResult> CrearCuenta()
         {
-            return View(await Task.Run(() => new RegistroViewModel()));
+            return View(await Task.Run(() => new DuenoViewModel()));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearCuenta(RegistroViewModel model)
+        public async Task<IActionResult> CrearCuenta(DuenoViewModel model)
         {
             if (!ModelState.IsValid)
             {

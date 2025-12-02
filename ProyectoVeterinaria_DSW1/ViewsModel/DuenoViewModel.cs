@@ -1,6 +1,6 @@
 ﻿namespace ProyectoVeterinaria_DSW1.ViewsModel
 {
-    public class RegistroViewModel
+    public class DuenoViewModel
     {
         //usuario
         public string? email { get; set; }

@@ -1,4 +1,5 @@
-﻿using ProyectoVeterinaria_DSW1.Models;
+﻿using ProyectoVeterinaria_DSW1.Constants;
+using ProyectoVeterinaria_DSW1.Models;
 using ProyectoVeterinaria_DSW1.Repository;
 using ProyectoVeterinaria_DSW1.ViewsModel;
 
@@ -15,31 +16,39 @@ namespace ProyectoVeterinaria_DSW1.Services
             _dueno = dueno;
         }
 
-        public string RegistrarDueno(RegistroViewModel model)
+        public string RegistrarDueno(DuenoViewModel model)
         {
             string mensaje = "";
 
-            Usuario user = new Usuario
+            try
             {
-                email = model.email,
-                password = model.password,
-                idrol = 1
-            };
+                Usuario user = new Usuario
+                {
+                    email = model.email,
+                    password = model.password,
+                    idrol = Roles.VETERINARIO
+                };
 
-            int idUsuario = _usuario.ObtenerID(user);
+                int idUsuario = _usuario.InsertarUsuario(user);
+                if (idUsuario <= 0)
+                    return "Error al registrase";
 
-            Dueno dueno = new Dueno
-            {
-                idusuario = idUsuario,
-                nombre = model.nombre,
-                apellido=model.apellido,
-                telefono=model.telefono,
-                direccion=model.direccion
-            };
+                Dueno dueno = new Dueno
+                {
+                    idusuario = idUsuario,
+                    nombre = model.nombre,
+                    apellido = model.apellido,
+                    telefono = model.telefono,
+                    direccion = model.direccion
+                };
 
-            mensaje = _dueno.agregar(dueno);
+                mensaje = _dueno.agregar(dueno);
 
 
+                return mensaje;
+
+            }
+            catch (Exception ex){mensaje = ex.Message;}
             return mensaje;
         }
     }
