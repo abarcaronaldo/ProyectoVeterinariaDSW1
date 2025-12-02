@@ -10,7 +10,13 @@ builder.Services.AddScoped<IUsuario, UsuarioDAO>();
 builder.Services.AddScoped<IDueno, DuenoDAO>();
 builder.Services.AddScoped<DuenoService>();
 builder.Services.AddScoped<UsuarioService>();
-builder.Services.AddSession();
+
+//sesion
+builder.Services.AddDistributedMemoryCache(); //guarda sesion en ram
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); //30 inactivo borra sesion
+});
 
 var app = builder.Build();
 
@@ -26,6 +32,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 
@@ -35,4 +42,4 @@ app.MapControllerRoute(
 
 app.Run();
 
-app.UseSession();
+
