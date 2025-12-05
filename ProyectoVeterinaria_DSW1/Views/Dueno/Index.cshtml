@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Panel del Cliente";
+}
+
+<h1>Panel del Cliente</h1>
+
+<p>
+    Bienvenido
+</p>
+
+<hr />
+
+<h3>Menú principal</h3>
+
+<ul>
+    <li>
+        <a asp-controller="Dueno" asp-action="Informacion">
+            Informacion personal
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Mascota" asp-action="AgregarMascota">
+            Agregar mascota
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Mascota" asp-action="MisMascota">
+            Mis mascotas
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Cita" asp-action="Reservar">
+            Reservar cita
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Cita" asp-action="MisCitas">
+            Ver mis citas
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Login" asp-action="Logout">
+            Cerrar sesión
+        </a>
+    </li>
+</ul>

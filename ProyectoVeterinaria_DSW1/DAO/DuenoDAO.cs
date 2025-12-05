@@ -42,7 +42,34 @@ namespace ProyectoVeterinaria_DSW1.DAO
 
         public Dueno buscar(int id)
         {
-            throw new NotImplementedException();
+            Dueno obj = null;
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_buscarDueno_id", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdUsuario", id);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            obj = new Dueno
+                            {
+                                idueno = Convert.ToInt32(dr["IdDueno"]),
+                                idusuario = Convert.ToInt32(dr["IdUsuario"]),
+                                nombre = dr["Nombre"].ToString(),
+                                apellido = dr["Apellido"].ToString(),
+                                telefono = dr["Telefono"] != DBNull.Value ? dr["Telefono"].ToString() : "",
+                                direccion = dr["Direccion"] != DBNull.Value ? dr["Direccion"].ToString() : ""
+                            };
+                        }
+                    }
+                }
+            }
+
+            return obj;
+
         }
 
         public string eliminar(Dueno entidad)

@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Panel del Veterinario";
+}
+
+<h1>Panel del Veterinario</h1>
+
+<p>
+    Bienvenido, Doctor.
+</p>
+
+<hr />
+
+<h3>Resumen del día</h3>
+
+<ul>
+    <li><strong>Citas para hoy:</strong> @ViewBag.CitasHoy</li>
+    <li><strong>Citas pendientes:</strong> @ViewBag.CitasPendientes</li>
+    <li><strong>Citas atendidas:</strong> @ViewBag.CitasAtendidas</li>
+</ul>
+
+<hr />
+
+<h3>Menú principal</h3>
+
+<ul>
+    <li>
+        <a asp-controller="Cita" asp-action="MisCitas">
+            Ver mis citas
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="HistoriaClinica" asp-action="Index">
+            Historial de mascotas
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Horario" asp-action="Index">
+            Mi disponibilidad
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Veterinario" asp-action="Perfil">
+            Mi perfil
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Veterinario" asp-action="AgregarVeterinario">
+            Agregar Veterinario
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Login" asp-action="Logout">
+            Cerrar sesión
+        </a>
+    </li>
+</ul>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoVeterinaria_DSW1.Constants;
 using ProyectoVeterinaria_DSW1.Models;
+using ProyectoVeterinaria_DSW1.Repository;
 using ProyectoVeterinaria_DSW1.Services;
 using ProyectoVeterinaria_DSW1.ViewsModel;
 
@@ -8,15 +10,17 @@ namespace ProyectoVeterinaria_DSW1.Controllers
     public class LoginController : Controller
     {
         DuenoService _dueno;
+        VeterinarioService _veterinario;
         UsuarioService _usuario;
 
-        public LoginController(DuenoService dueno, UsuarioService usuario)
+        public LoginController(DuenoService dueno, VeterinarioService veterinario, UsuarioService usuario)
         {
             _dueno = dueno;
+            _veterinario = veterinario;
             _usuario = usuario;
         }
 
-        //front login principal
+        //front login
         [HttpGet]
         public IActionResult Login()
         {
@@ -40,14 +44,21 @@ namespace ProyectoVeterinaria_DSW1.Controllers
                                   usuario.idusuario.ToString());
 
             HttpContext.Session.SetString("IdRol",
-                                          usuario.idrol.ToString());
+                                          usuario.idrol.ToString() ?? "0");
 
-            if (usuario.idrol == 1)
+
+            if (usuario.idrol == Roles.DUENO)
             {
+                Dueno dueno = _dueno.BuscarDuenoId(usuario.idusuario);
+                HttpContext.Session.SetString("IdDueno", dueno.idueno.ToString());
+                 
                 return RedirectToAction("Index", "Dueno");
             }
-            else if (usuario.idrol == 2)
+            else if (usuario.idrol == Roles.VETERINARIO)
             {
+                Veterinario veterinario = _veterinario.BuscarVeterinarioId(usuario.idusuario);
+                HttpContext.Session.SetString("IdVeterinario", veterinario.idveterinario.ToString());
+
                 return RedirectToAction("Index", "Veterinario");
             }
             else
@@ -66,11 +77,11 @@ namespace ProyectoVeterinaria_DSW1.Controllers
 
         public async Task<IActionResult> CrearCuenta()
         {
-            return View(await Task.Run(() => new RegistroViewModel()));
+            return View(await Task.Run(() => new DuenoViewModel()));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearCuenta(RegistroViewModel model)
+        public async Task<IActionResult> CrearCuenta(DuenoViewModel model)
         {
             if (!ModelState.IsValid)
             {
