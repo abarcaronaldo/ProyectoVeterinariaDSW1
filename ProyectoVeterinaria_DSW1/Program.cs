@@ -9,7 +9,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUsuario, UsuarioDAO>();
 builder.Services.AddScoped<IDueno, DuenoDAO>();
 builder.Services.AddScoped<IVeterinario, VeterinarioDAO>();
+builder.Services.AddScoped<IMascota, MascotaDAO>();
 builder.Services.AddScoped<DuenoService>();
+builder.Services.AddScoped<MascotaService>();
 builder.Services.AddScoped<VeterinarioService>();
 builder.Services.AddScoped<UsuarioService>();
 
@@ -40,7 +42,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Login}/{id?}");
 
 app.Run();
 

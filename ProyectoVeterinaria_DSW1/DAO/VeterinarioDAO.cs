@@ -39,7 +39,30 @@ namespace ProyectoVeterinaria_DSW1.DAO
 
         public Veterinario buscar(int id)
         {
-            throw new NotImplementedException();
+            Veterinario obj = null;
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_buscarVeterinario_id", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdUsuario", id);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            obj = new Veterinario
+                            {
+                                idveterinario = Convert.ToInt32(dr["IdVeterinario"]),
+                                idusuario = Convert.ToInt32(dr["IdUsuario"]),
+                                nombre = dr["Nombre"].ToString(),
+                                apellido = dr["Apellido"].ToString(),
+                            };
+                        }
+                    }
+                }
+            }
+            return obj;
         }
 
         public string eliminar(Veterinario entidad)

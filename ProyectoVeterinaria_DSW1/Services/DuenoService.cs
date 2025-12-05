@@ -16,6 +16,12 @@ namespace ProyectoVeterinaria_DSW1.Services
             _dueno = dueno;
         }
 
+        public Dueno BuscarDuenoId(int id)
+        {
+            return _dueno.buscar(id);
+
+        }
+
         public string RegistrarDueno(DuenoViewModel model)
         {
             string mensaje = "";
