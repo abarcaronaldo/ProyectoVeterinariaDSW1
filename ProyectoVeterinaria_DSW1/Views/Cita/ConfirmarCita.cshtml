@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "ConfirmarCita";
+}
+
+<h3>Confirmar Cita</h3>
+
+<p><strong>Fecha:</strong> @ViewBag.FechaCita</p>
+<p><strong>Hora sugerida:</strong> @ViewBag.HoraSugerida</p>
+
+<form asp-action="ConfirmarCita" method="post">
+
+    <input type="hidden" name="IdAgenda" value="@ViewBag.IdAgenda" />
+    <input type="hidden" name="FechaCita" value="@ViewBag.FechaCita" />
+    <input type="hidden" name="HoraCita" value="@ViewBag.HoraSugerida" />
+
+
+
+    <div class="form-group">
+        <label>Mascota</label>
+        <select name="IdMascota" class="form-control" required>
+            @foreach (var m in ViewBag.Mascotas)
+            {
+                <option value="@m.idmascota">@m.nombre</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Motivo de la cita</label>
+        <textarea name="Motivo" class="form-control" required></textarea>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success">Registrar Cita</button>
+</form>
+<br />
+<a asp-controller="Dueno" asp-action="ReservarCita" class="btn btn-secondary">← Volver</a>
+
+

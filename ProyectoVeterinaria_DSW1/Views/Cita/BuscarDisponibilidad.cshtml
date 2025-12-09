@@ -1,0 +1,36 @@
+﻿@using ProyectoVeterinaria_DSW1.ViewsModel
+@model List<AgendaDisponibilidadViewModel>
+
+@{
+    ViewData["Title"] = "Veterinarios disponibles";
+    var fecha = ViewBag.FechaSeleccionada as string ?? "";
+}
+
+<h2>Veterinarios disponibles para @fecha</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">
+        No hay veterinarios disponibles en la fecha seleccionada o no hay cupos.
+    </div>
+
+    <a asp-controller="Dueno" asp-action="ReservarCita" class="btn btn-secondary">← Elegir otra fecha</a>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var a in Model)
+        {
+            <a asp-action="SeleccionarHora"
+               asp-route-idAgenda="@a.IdAgenda"
+               asp-route-fecha="@fecha"
+               class="list-group-item list-group-item-action">
+                @a.NombreVeterinario — @a.HoraInicio.ToString(@"hh\:mm") a @a.HoraFin.ToString(@"hh\:mm") — Cupo disponible: @a.CupoDisponible
+            </a>
+        }
+    </div>
+
+    <br />
+    <a asp-controller="Dueno" asp-action="ReservarCita" class="btn btn-secondary">← Volver</a>
+
+}

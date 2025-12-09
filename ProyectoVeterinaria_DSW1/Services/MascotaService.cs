@@ -26,5 +26,10 @@ namespace ProyectoVeterinaria_DSW1.Services
             catch (Exception ex) { mensaje = ex.Message; }
             return mensaje;
         }
+
+        public IEnumerable<Mascota> ListadoMascotaPorDueno(int idDueno)
+        {
+            return _mascota.BuscarMascotasPorDueno(idDueno);
+        }
     }
 }

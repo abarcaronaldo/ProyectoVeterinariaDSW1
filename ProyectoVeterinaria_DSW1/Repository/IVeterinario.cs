@@ -2,7 +2,7 @@
 
 namespace ProyectoVeterinaria_DSW1.Repository
 {
-    public interface IVeterinario:Icrud<Veterinario>
+    public interface IVeterinario:ICrud<Veterinario>
     {
         //agregar metodo especiales si se requieren
     }

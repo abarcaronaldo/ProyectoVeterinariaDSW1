@@ -2,7 +2,7 @@
 
 namespace ProyectoVeterinaria_DSW1.Repository
 {
-    public interface IDueno:Icrud<Dueno>
+    public interface IDueno:ICrud<Dueno>
     {
         //agregar metodos especiales si se requieren
     }

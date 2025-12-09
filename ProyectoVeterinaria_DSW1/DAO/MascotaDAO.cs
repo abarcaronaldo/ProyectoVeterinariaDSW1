@@ -45,6 +45,42 @@ namespace ProyectoVeterinaria_DSW1.DAO
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Mascota> BuscarMascotasPorDueno(int idDueno)
+        {
+            var lista = new List<Mascota>();
+
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_ListaMascotar_PorDueno", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdDueno", idDueno);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var mascota = new Mascota
+                            {
+                                idmascota = (int)dr["IdMascota"],
+                                iddueno = (int)dr["IdDueno"],
+                                nombre = dr["Nombre"].ToString()!,
+                                especie = dr["Especie"].ToString()!,
+                                raza = dr["Raza"].ToString()!,
+                                fechanacimiento = DateOnly.FromDateTime((DateTime)dr["FechaNacimiento"]
+                    ),
+                                peso = (decimal)dr["Peso"]
+                            };
+
+                            lista.Add(mascota);
+                        }
+                    }
+                }
+            }
+
+            return lista;
+        }
+
         public string eliminar(Mascota entidad)
         {
             throw new NotImplementedException();

@@ -10,10 +10,14 @@ builder.Services.AddScoped<IUsuario, UsuarioDAO>();
 builder.Services.AddScoped<IDueno, DuenoDAO>();
 builder.Services.AddScoped<IVeterinario, VeterinarioDAO>();
 builder.Services.AddScoped<IMascota, MascotaDAO>();
+builder.Services.AddScoped<IAgenda, AgendaDAO>();
+builder.Services.AddScoped<ICita, CitaDAO>();
 builder.Services.AddScoped<DuenoService>();
+builder.Services.AddScoped<CitaService>();
 builder.Services.AddScoped<MascotaService>();
 builder.Services.AddScoped<VeterinarioService>();
 builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<CitaService>();
 
 //sesion
 builder.Services.AddDistributedMemoryCache(); //guarda sesion en ram

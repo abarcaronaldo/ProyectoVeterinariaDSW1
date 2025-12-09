@@ -1,0 +1,20 @@
+﻿@{
+    var exito = TempData["Exito"] as bool?;
+    var mensajeError = TempData["Error"] as string;
+}
+
+<h2>@(exito == true ? "¡Cita registrada correctamente!" : "No se pudo registrar la cita")</h2>
+
+@if (exito != true)
+{
+    <p>@mensajeError</p>
+    <a asp-controller="Dueno" asp-action="ReservarCita" class="btn btn-primary">Volver a reservar cita</a>
+}
+else
+{
+    <p><strong>Fecha:</strong> @TempData["FechaCita"]</p>
+    <p><strong>Hora:</strong> @TempData["HoraCita"]</p>
+    <p><strong>Motivo:</strong> @TempData["Motivo"]</p>
+    <a asp-action="Index" asp-controller="Dueno" class="btn btn-primary">Volver al inicio</a>
+    <a asp-controller="Dueno" asp-action="ReservarCita" class="btn btn-secondary">Reservar otra cita</a>
+}

@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Reservar cita - Seleccionar fecha";
+}
+
+<h2>Reservar Cita</h2>
+
+<form method="get" asp-controller="Cita" asp-action="BuscarDisponibilidad">
+
+    <label>Seleccione una fecha de cita:</label>
+    <input type="date" name="fecha" 
+        value="@ViewBag.FechaPorDefecto"
+        min="@DateTime.Now.ToString("yyyy-MM-dd")"
+        class="form-control" required />
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Buscar veterinarios disponibles
+    </button>
+</form>
+
+<br />
+
+<a asp-action="Index" class="btn btn-secondary">← Volver atrás</a>
