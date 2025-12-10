@@ -2,23 +2,98 @@
     ViewData["Title"] = "Reservar cita - Seleccionar fecha";
 }
 
-<h2>Reservar Cita</h2>
+<style>
+    .reserva-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 35px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<form method="get" asp-controller="Cita" asp-action="BuscarDisponibilidad">
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 25px;
+    }
 
-    <label>Seleccione una fecha de cita:</label>
-    <input type="date" name="fecha" 
-        value="@ViewBag.FechaPorDefecto"
-        min="@DateTime.Now.ToString("yyyy-MM-dd")"
-        class="form-control" required />
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #555;
+    }
 
-    <br />
+    input[type="date"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border 0.3s;
+    }
 
-    <button type="submit" class="btn btn-primary">
-        Buscar veterinarios disponibles
-    </button>
-</form>
+        input[type="date"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
 
-<br />
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: background 0.3s;
+    }
 
-<a asp-action="Index" class="btn btn-secondary">← Volver atrás</a>
+        button:hover {
+            background: #0056b3;
+        }
+
+    .btn-volver {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        margin-top: 20px;
+        background: #6c757d;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.3s;
+    }
+
+        .btn-volver:hover {
+            background: #5a6268;
+        }
+</style>
+
+<div class="reserva-container">
+    <h2>Reservar Cita</h2>
+
+    <form method="get" asp-controller="Cita" asp-action="BuscarDisponibilidad">
+        <label for="fecha">Seleccione una fecha de cita:</label>
+        <input type="date"
+               id="fecha"
+               name="fecha"
+               value="@ViewBag.FechaPorDefecto"
+               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+               required />
+
+        <button type="submit">
+            Buscar veterinarios disponibles
+        </button>
+    </form>
+
+    <a asp-action="Index" class="btn-volver">← Volver atrás</a>
+</div>

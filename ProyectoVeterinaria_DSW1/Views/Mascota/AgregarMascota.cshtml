@@ -1,51 +1,128 @@
 ﻿@model ProyectoVeterinaria_DSW1.Models.Mascota
 
 @{
-    ViewData["Title"] = "AgregarMascota";
+    ViewData["Title"] = "Agregar Mascota";
 }
 
-<h1>AgregarMascota</h1>
+<style>
+    body {
+        background: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<h4>Mascota</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AgregarMascota">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="nombre" class="control-label"></label>
-                <input asp-for="nombre" class="form-control" />
-                <span asp-validation-for="nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="especie" class="control-label"></label>
-                <input asp-for="especie" class="form-control" />
-                <span asp-validation-for="especie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="raza" class="control-label"></label>
-                <input asp-for="raza" class="form-control" />
-                <span asp-validation-for="raza" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="fechanacimiento" class="control-label"></label>
-                <input asp-for="fechanacimiento" class="form-control" />
-                <span asp-validation-for="fechanacimiento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="peso" class="control-label"></label>
-                <input asp-for="peso" class="form-control" />
-                <span asp-validation-for="peso" class="text-danger"></span>
-            </div>
-            <hr />
-            <div class="form-group d-flex gap-2">
-                <input type="submit" value="Registrar" class="btn btn-success" />
-                <a asp-controller="Dueno" asp-action="Index" class="btn btn-danger">Regresar</a>
-            </div>
-        </form>
-    </div>
+    .form-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #007bff;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #555;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        transition: border 0.3s;
+    }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+
+    .btn {
+        padding: 12px;
+        font-weight: 600;
+        border-radius: 10px;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-success {
+        background: #28a745;
+        color: white;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+    .validation-summary-errors {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Agregar Mascota</h1>
+
+    <form asp-action="AgregarMascota">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <label asp-for="nombre"></label>
+        <input asp-for="nombre" placeholder="Nombre de la mascota" />
+        <span asp-validation-for="nombre" class="text-danger"></span>
+
+        <label asp-for="especie"></label>
+        <input asp-for="especie" placeholder="Ej: Perro, Gato" />
+        <span asp-validation-for="especie" class="text-danger"></span>
+
+        <label asp-for="raza"></label>
+        <input asp-for="raza" placeholder="Raza de la mascota" />
+        <span asp-validation-for="raza" class="text-danger"></span>
+
+        <label asp-for="fechanacimiento"></label>
+        <input asp-for="fechanacimiento" type="date"
+               min="@DateTime.Now.AddYears(-30).ToString("yyyy-MM-dd")"
+               max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="fechanacimiento" class="text-danger"></span>
+
+
+        <label asp-for="peso"></label>
+        <input asp-for="peso" placeholder="Peso en kg" />
+        <span asp-validation-for="peso" class="text-danger"></span>
+
+        <input type="submit" value="Registrar" class="btn btn-success" />
+        <a asp-controller="Dueno" asp-action="Index" class="btn btn-danger">Volver</a>
+    </form>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

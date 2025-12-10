@@ -2,38 +2,119 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
+<style>
+    /* Contenedor central */
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 40px;
+        background: #f5f7fa;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-@if (ViewBag.Error != null)
-{
-    <div style="color:red;">
-        @ViewBag.Error
-    </div>
-}
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
 
-<form asp-action="Login" method="post">
+    /* Estilos de inputs */
+    .login-container label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #555;
+    }
 
-    <div>
-        <label>Email:</label><br />
-        <input type="email" name="email" required />
-    </div>
+    .login-container input {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border 0.3s;
+    }
 
-    <br />
+        .login-container input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
 
-    <div>
-        <label>Password:</label><br />
-        <input type="password" name="password" required />
-    </div>
+    /* Botones */
+    .login-container button {
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
 
-    <br />
+        .login-container button:hover {
+            background: #0056b3;
+        }
 
-    <button type="submit">Iniciar sesión</button>
+    /* Error */
+    .error-message {
+        background: #ffdddd;
+        color: #d8000c;
+        border: 1px solid #d8000c;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+    }
 
-</form>
+    /* Link Crear cuenta */
+    .crear-cuenta {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        font-weight: 600;
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
 
-<br />
+        .crear-cuenta:hover {
+            color: #0056b3;
+        }
+</style>
 
-<!-- crear cuenta -->
-<a asp-controller="Login" asp-action="CrearCuenta" class="btn-crear">
-    Crear cuenta
-</a>
+<div class="login-container">
+    <h1>Iniciar Sesión</h1>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="error-message">
+            @ViewBag.Error
+        </div>
+    }
+
+    <form asp-action="Login" method="post">
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+        </div>
+
+        <div>
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="********" required />
+        </div>
+
+        <button type="submit">Iniciar sesión</button>
+    </form>
+
+    <a asp-controller="Login" asp-action="CrearCuenta" class="crear-cuenta">
+        ¿No tienes cuenta? Crear una
+    </a>
+</div>

@@ -2,60 +2,124 @@
     ViewData["Title"] = "Panel del Veterinario";
 }
 
-<h1>Panel del Veterinario</h1>
+<style>
+    body {
+        background: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<p>
-    Bienvenido, Doctor.
-</p>
+    .panel-container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
 
-<hr />
+    h1 {
+        text-align: center;
+        color: #007bff;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
 
-<h3>Resumen del día</h3>
+    h3 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
 
-<ul>
-    <li><strong>Citas para hoy:</strong> @ViewBag.CitasHoy</li>
-    <li><strong>Citas pendientes:</strong> @ViewBag.CitasPendientes</li>
-    <li><strong>Citas atendidas:</strong> @ViewBag.CitasAtendidas</li>
-</ul>
+    .summary-cards {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
 
-<hr />
+    .card {
+        flex: 1 1 150px;
+        background: #007bff;
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.2s, background 0.3s;
+    }
 
-<h3>Menú principal</h3>
+        .card:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
 
-<ul>
-    <li>
-        <a asp-controller="Cita" asp-action="MisCitas">
-            Ver mis citas
-        </a>
-    </li>
+        .card strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
 
-    <li>
-        <a asp-controller="HistoriaClinica" asp-action="Index">
-            Historial de mascotas
-        </a>
-    </li>
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
 
-    <li>
-        <a asp-controller="Horario" asp-action="Index">
-            Mi disponibilidad
-        </a>
-    </li>
+    .menu-item {
+        display: block;
+        padding: 20px;
+        text-align: center;
+        background: #007bff;
+        color: white;
+        font-weight: 600;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: background 0.3s, transform 0.2s;
+    }
 
-    <li>
-        <a asp-controller="Veterinario" asp-action="Perfil">
-            Mi perfil
-        </a>
-    </li>
+        .menu-item:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
 
-    <li>
-        <a asp-controller="Veterinario" asp-action="AgregarVeterinario">
-            Agregar Veterinario
-        </a>
-    </li>
+        .menu-item.logout {
+            background: #6c757d;
+        }
 
-    <li>
-        <a asp-controller="Login" asp-action="Logout">
-            Cerrar sesión
-        </a>
-    </li>
-</ul>
+            .menu-item.logout:hover {
+                background: #5a6268;
+            }
+</style>
+
+<div class="panel-container">
+    <h1>Panel del Veterinario</h1>
+    <p style="text-align:center; font-size:16px; color:#555;">
+        Bienvenido, Doctor.
+    </p>
+
+    <h3>Resumen del día</h3>
+    <div class="summary-cards">
+        <div class="card">
+            <strong>Citas para hoy</strong>
+            @ViewBag.CitasHoy
+        </div>
+        <div class="card">
+            <strong>Citas pendientes</strong>
+            @ViewBag.CitasPendientes
+        </div>
+        <div class="card">
+            <strong>Citas atendidas</strong>
+            @ViewBag.CitasAtendidas
+        </div>
+    </div>
+
+    <h3>Menú principal</h3>
+    <div class="menu-grid">
+        <a asp-controller="Cita" asp-action="MisCitas" class="menu-item">Ver mis citas</a>
+        <a asp-controller="HistoriaClinica" asp-action="Index" class="menu-item">Historial de mascotas</a>
+        <a asp-controller="Horario" asp-action="Index" class="menu-item">Mi disponibilidad</a>
+        <a asp-controller="Veterinario" asp-action="Perfil" class="menu-item">Mi perfil</a>
+        <a asp-controller="Veterinario" asp-action="AgregarVeterinario" class="menu-item">Agregar veterinario</a>
+        <a asp-controller="Login" asp-action="Logout" class="menu-item logout">Cerrar sesión</a>
+    </div>
+</div>
