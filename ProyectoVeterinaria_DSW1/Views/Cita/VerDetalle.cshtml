@@ -1,0 +1,90 @@
+﻿@model ProyectoVeterinaria_DSW1.Models.DetalleCita
+
+@{
+    ViewData["Title"] = "VerDetalle";
+}
+
+<h1>Detalle Cita</h1>
+
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.idcita)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.idcita)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.fechacita)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.fechacita)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.horacita)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.horacita)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.motivo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.motivo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.fechacreacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.fechacreacion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombremascota)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombremascota)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.especie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.especie)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.raza)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.raza)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombredueno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombredueno)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.apellidodueno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.apellidodueno)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.telefonodueno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.telefonodueno)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Crear Historial Médico", "CrearHistorial", "Historial", new { idCita = Model.idcita }, new { @class = "btn btn-warning me-2" })
+    <a asp-action="PruebaCita">Regresar</a>
+</div>

@@ -2,8 +2,8 @@
 
 namespace ProyectoVeterinaria_DSW1.Repository
 {
-    public interface IVeterinario:Icrud<Veterinario>
+    public interface IEstadoCita
     {
-
+        List<EstadoCita> ListarEstados();
     }
 }

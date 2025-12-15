@@ -1,0 +1,53 @@
+﻿@model ProyectoVeterinaria_DSW1.Models.HistorialMedico
+
+@{
+    ViewData["Title"] = "CrearHistorial";
+}
+
+<h1>Registrar Historial Medico</h1>
+
+<hr />
+<div class="row">
+        <h2>Mascota: @Model.NombreMascota</h2>
+        <hr />
+  
+        <form asp-controller="Historial" asp-action="CrearHistorial" method="post">
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdCita" />
+            <input type="hidden" asp-for="IdMascota" />
+            <input type="hidden" asp-for="IdVeterinario" />
+
+            <div class="mb-3">
+                <label asp-for="Diagnostico" class="form-label"></label>
+                <textarea asp-for="Diagnostico" rows="5" class="form-control" placeholder="Ingrese el diagnóstico..."></textarea>
+                <span asp-validation-for="Diagnostico" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Tratamiento" class="form-label"></label>
+                <textarea asp-for="Tratamiento" rows="5" class="form-control" placeholder="Ingrese el tratamiento..."></textarea>
+                <span asp-validation-for="Tratamiento" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Observaciones" class="form-label"></label>
+                <textarea asp-for="Observaciones" rows="3" class="form-control" placeholder="Notas adicionales (opcional)..."></textarea>
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-between">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-save"></i> Registrar Historial
+                </button>
+
+                <a asp-action="PruebaCita" asp-controller="Cita" class="btn btn-secondary align-self-center">
+                    Cancelar y Regresar
+                </a>
+            </div>
+        </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

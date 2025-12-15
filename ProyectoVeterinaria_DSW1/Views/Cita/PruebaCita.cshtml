@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model IEnumerable<ProyectoVeterinaria_DSW1.Models.Cita>
+@using System.Linq
+@{
+    ViewData["Title"] = "PruebaCita";
+}
+
+<h1>PruebaCita</h1>
+
+<h2>Prueba de Listado de Citas por Estado</h2>
+<form asp-action="PruebaCita" asp-controller="Cita" method="post" class="mb-4">
+    <div class="row align-items-end">
+        <div class="col-md-4">
+            <label for="IdEstadoFiltro" class="form-label">Filtrar por Estado:</label>
+            @Html.DropDownList("IdEstadoFiltro", ViewBag.ListaEstados as List<SelectListItem>, new { @class = "form-select" })
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">
+                Filtrar
+            </button>
+        </div>
+    </div>
+</form>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.idcita)</th>
+            <th>@Html.DisplayNameFor(model => model.fechacita)</th>
+            <th>@Html.DisplayNameFor(model => model.horacita)</th>
+            <th>@Html.DisplayNameFor(model => model.estado)</th>
+            <th>@Html.DisplayNameFor(model => model.especie)</th>
+            <th>@Html.DisplayNameFor(model => model.nombredueno)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || !Model.Any())
+        {
+            <tr><td colspan="7" class="text-center text-muted">No se encontraron citas con el filtro aplicado.</td></tr>
+        }
+        @foreach (var item in Model) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.idcita)</td>
+            <td>@item.fechacita.ToShortDateString()</td>
+            <td>@item.horacita.ToString(@"hh\:mm")</td>
+            <td>@Html.DisplayFor(modelItem => item.estado)</td>
+            <td>@Html.DisplayFor(modelItem => item.especie)</td>
+            <td>@Html.DisplayFor(modelItem => item.nombredueno)</td>
+            <td>
+                    @Html.ActionLink("Ver Detalle", "VerDetalle", new { idCita=item.idcita }) |
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<p>Total de registros mostrados: @Model.Count()</p>

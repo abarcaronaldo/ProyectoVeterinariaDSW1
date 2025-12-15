@@ -62,6 +62,8 @@ namespace ProyectoVeterinaria_DSW1.DAO
                                 apellido = dr["Apellido"].ToString(),
                                 telefono = dr["Telefono"] != DBNull.Value ? dr["Telefono"].ToString() : "",
                                 direccion = dr["Direccion"] != DBNull.Value ? dr["Direccion"].ToString() : ""
+
+
                             };
                         }
                     }

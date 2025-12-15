@@ -35,7 +35,7 @@ namespace ProyectoVeterinaria_DSW1.Services
 
                 int idUsuario = _usuario.InsertarUsuario(user);
                 if (idUsuario <= 0)
-                    return "Error al registrase";
+                    return "Error al registrarse";
 
                 Veterinario veterinario = new Veterinario
                 {
@@ -53,5 +53,6 @@ namespace ProyectoVeterinaria_DSW1.Services
             catch (Exception ex) { mensaje = ex.Message; }
             return mensaje;
         }
+
     }
 }
