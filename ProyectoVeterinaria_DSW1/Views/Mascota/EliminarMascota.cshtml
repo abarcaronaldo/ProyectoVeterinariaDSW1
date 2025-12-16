@@ -1,0 +1,60 @@
+﻿@model ProyectoVeterinaria_DSW1.Models.Mascota
+
+@{
+    ViewData["Title"] = "EliminarMascota";
+}
+
+<h1>EliminarMascota</h1>
+<div>
+    <h4>¿Está seguro que desea eliminar esta mascota?</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.idmascota)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.idmascota)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.iddueno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.iddueno)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.especie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.especie)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.raza)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.raza)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.peso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.peso)
+        </dd>
+    </dl>
+</div>
+<div>
+    <form asp-action="EliminarMascotaConfirmado" method="post">
+        <input type="hidden" name="id" value="@Model.idmascota" />
+        <button type="submit" class="btn btn-danger">
+            Eliminar
+        </button>
+        <a asp-action="ListadoMascota" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+</div>

@@ -1,0 +1,63 @@
+﻿@model ProyectoVeterinaria_DSW1.ViewsModel.CitaListadoViewModel
+
+@{
+    ViewData["Title"] = "BuscarCita";
+}
+
+<h1>Cita</h1>
+
+<h4>Cita Seleccionada</h4>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdCita)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.IdCita)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdAgenda)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.IdAgenda)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.FechaCita)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.FechaCita)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.HoraCita)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.HoraCita)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.FechaCreacion)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.FechaCreacion)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.EstadoCita)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.EstadoCita)</dd>
+</dl>
+
+<hr />
+
+<h4>Editar</h4>
+
+<form asp-action="ActualizarCita" method="post">
+
+    <input type="hidden" asp-for="IdCita" />
+
+    <div class="form-group">
+        <label asp-for="Motivo"></label>
+        <textarea asp-for="Motivo" class="form-control"></textarea>
+        <span asp-validation-for="Motivo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdMascota">Mascota</label>
+        <select asp-for="IdMascota"
+                class="form-control"
+                asp-items="@(new SelectList(ViewBag.Mascotas, "idmascota", "nombre"))">
+        </select>
+        <span asp-validation-for="IdMascota" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">
+        Actualizar
+    </button>
+
+    <a asp-action="MisCitas" class="btn btn-secondary">
+        Cancelar
+    </a>
+</form>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ProyectoVeterinaria_DSW1.ViewsModel.CitaListadoViewModel>
+
+@{
+    ViewData["Title"] = "MisCitas";
+}
+
+<h1>MisCitas</h1>
+@if (TempData["Mensaje"] != null)
+{
+    <div id="mensajeTemp" class="alert alert-info">@TempData["Mensaje"]</div>
+}
+<p>
+    <a asp-controller="Dueno" asp-action="Index" class="btn btn-outline-danger">Regresar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdAgenda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoraCita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreMascota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoCita)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAgenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraCita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreMascota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoCita)
+            </td>
+            <td>
+                @Html.ActionLink("Detalles", "BuscarCita", new { id = item.IdCita }, new { @class = "btn btn-success" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    setTimeout(() => {
+        const msg = document.getElementById('mensajeTemp');
+        if (msg) {
+            msg.style.display = 'none';
+        }
+    }, 3000);
+</script>
+

@@ -1,0 +1,59 @@
+﻿@model ProyectoVeterinaria_DSW1.Models.Mascota
+
+@{
+    ViewData["Title"] = "EditarMascota";
+}
+
+<h1>Editar Mascota</h1>
+
+<h4>Mascota</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditarMascota" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="idmascota" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input asp-for="iddueno" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input asp-for="nombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="especie" class="control-label"></label>
+                <input asp-for="especie" class="form-control" />
+                <span asp-validation-for="especie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="raza" class="control-label"></label>
+                <input asp-for="raza" class="form-control" />
+                <span asp-validation-for="raza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fechanacimiento" class="control-label"></label>
+                <input asp-for="fechanacimiento" type="date" class="form-control" />
+                <span asp-validation-for="fechanacimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="peso" class="control-label"></label>
+                <input asp-for="peso" class="form-control" />
+                <span asp-validation-for="peso" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+                <a asp-action="ListadoMascota" class="btn btn-danger">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

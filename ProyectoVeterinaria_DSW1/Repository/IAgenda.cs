@@ -3,7 +3,7 @@ using ProyectoVeterinaria_DSW1.ViewsModel;
 
 namespace ProyectoVeterinaria_DSW1.Repository
 {
-    public interface IAgenda:ICrud<Agenda>
+    public interface IAgenda:ICrud<Agenda>, IConsulta<Agenda>
     {
         IEnumerable<AgendaDisponibilidadViewModel> BuscarDisponibilidad(DateOnly fecha);
         IEnumerable<TimeSpan> ObtenerHorasOcupadas(int idAgenda, DateOnly fecha);

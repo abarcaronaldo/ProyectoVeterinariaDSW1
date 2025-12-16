@@ -1,4 +1,5 @@
-﻿using ProyectoVeterinaria_DSW1.Constants;
+﻿using NuGet.Protocol.Core.Types;
+using ProyectoVeterinaria_DSW1.Constants;
 using ProyectoVeterinaria_DSW1.Models;
 using ProyectoVeterinaria_DSW1.Repository;
 using ProyectoVeterinaria_DSW1.ViewsModel;
@@ -75,6 +76,38 @@ namespace ProyectoVeterinaria_DSW1.Services
             };
 
             return _cita.RegistrarCita(cita); 
+        }
+
+        public IEnumerable<CitaListadoViewModel> MisCitas(int idDueno)
+        {
+            return _cita.MisCitas(idDueno);
+        }
+
+        public CitaListadoViewModel ObtenerCita(int idCita, int idDueno)
+        {
+            return _cita.BuscarCita(idCita, idDueno);
+        }
+
+        public string Actualizar(EditarCitaViewModel model, int idDueno)
+        {
+            if (model.IdCita <= 0)
+                return "Cita inválida";
+
+            if (model.IdMascota <= 0)
+                return "Debe seleccionar una mascota";
+
+            if (string.IsNullOrWhiteSpace(model.Motivo))
+                return "El motivo no puede estar vacío";
+
+            var cita = new Cita
+            {
+                IdCita = model.IdCita,
+                IdMascota = model.IdMascota,
+                Motivo = model.Motivo,
+                IdDueno = idDueno
+            };
+
+            return _cita.actualizar(cita);
         }
 
     }

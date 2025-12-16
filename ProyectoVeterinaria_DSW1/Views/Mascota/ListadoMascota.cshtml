@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ProyectoVeterinaria_DSW1.Models.Mascota>
+
+@{
+    ViewData["Title"] = "ListadoMascota";
+}
+
+<h1>ListadoMascota</h1>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div id="mensajeTemp" class="alert alert-info">@TempData["Mensaje"]</div>
+}
+
+
+<p>
+    <a asp-controller="Dueno" asp-action="Index">Regresar</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>No tiene mascotas a cargo.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.idmascota)</th>
+                <th>@Html.DisplayNameFor(model => model.nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.especie)</th>
+                <th>@Html.DisplayNameFor(model => model.raza)</th>
+                <th>@Html.DisplayNameFor(model => model.fechanacimiento)</th>
+                <th>@Html.DisplayNameFor(model => model.peso)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.idmascota</td>
+                    <td>@item.nombre</td>
+                    <td>@item.especie</td>
+                    <td>@item.raza</td>
+                    <td>@item.fechanacimiento</td>
+                    <td>@item.peso</td>
+                    <td>
+                        @Html.ActionLink("Editar", "EditarMascota", new { id = item.idmascota }, new{@class="btn btn-success"})
+                        @Html.ActionLink("Eliminar", "EliminarMascota", new { id = item.idmascota }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<script>
+    setTimeout(() => {
+        const msg = document.getElementById('mensajeTemp');
+        if (msg) {
+            msg.style.display = 'none';
+        }
+    }, 3000);
+</script>
+

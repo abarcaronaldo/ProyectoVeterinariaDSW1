@@ -4,6 +4,7 @@ namespace ProyectoVeterinaria_DSW1.Models
 {
     public class Mascota
     {
+        [Display(Name = "Id Mascota")]
         public int idmascota { get; set; }
         public int iddueno { get; set; }
 

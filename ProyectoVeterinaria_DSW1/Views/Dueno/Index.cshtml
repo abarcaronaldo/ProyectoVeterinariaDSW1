@@ -5,7 +5,7 @@
 <h1>Panel del Cliente</h1>
 
 <p>
-    Bienvenido
+    Bienvenido @Context.Session.GetString("NombreUsuario")
 </p>
 
 <hr />
@@ -26,7 +26,7 @@
     </li>
 
     <li>
-        <a asp-controller="Mascota" asp-action="MisMascota">
+        <a asp-controller="Mascota" asp-action="ListadoMascota">
             Mis mascotas
         </a>
     </li>

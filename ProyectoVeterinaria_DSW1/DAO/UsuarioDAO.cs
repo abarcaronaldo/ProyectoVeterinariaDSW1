@@ -81,5 +81,10 @@ namespace ProyectoVeterinaria_DSW1.DAO
                 return 0;
             }
         }
+
+        public IEnumerable<Usuario> listado()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

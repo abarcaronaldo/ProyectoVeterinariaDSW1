@@ -5,6 +5,5 @@
         string agregar(T entidad);
         string actualizar(T entidad);
         string eliminar(T entidad);
-        T buscar(int id);
     }
 }

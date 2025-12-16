@@ -43,21 +43,19 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             HttpContext.Session.SetString("UsuarioId",
                                   usuario.idusuario.ToString());
 
-            HttpContext.Session.SetString("IdRol",
-                                          usuario.idrol.ToString() ?? "0");
-
-
             if (usuario.idrol == Roles.DUENO)
             {
                 Dueno dueno = _dueno.BuscarDuenoId(usuario.idusuario);
                 HttpContext.Session.SetString("IdDueno", dueno.idueno.ToString());
-                 
+                HttpContext.Session.SetString("NombreUsuario", $"{dueno.nombre} {dueno.apellido}");
+
                 return RedirectToAction("Index", "Dueno");
             }
             else if (usuario.idrol == Roles.VETERINARIO)
             {
                 Veterinario veterinario = _veterinario.BuscarVeterinarioId(usuario.idusuario);
                 HttpContext.Session.SetString("IdVeterinario", veterinario.idveterinario.ToString());
+                HttpContext.Session.SetString("NombreUsuario",$"{veterinario.nombre} {veterinario.apellido}");
 
                 return RedirectToAction("Index", "Veterinario");
             }
