@@ -2,7 +2,7 @@
 
 namespace ProyectoVeterinaria_DSW1.Repository
 {
-    public interface IMascota: ICrud<Mascota>
+    public interface IMascota: ICrud<Mascota>, IConsulta<Mascota>
     {
         //metodos especiales si se requieren
         IEnumerable<Mascota> BuscarMascotasPorDueno(int idDueno);

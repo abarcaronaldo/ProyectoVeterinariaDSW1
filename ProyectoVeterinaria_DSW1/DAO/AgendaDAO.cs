@@ -90,6 +90,11 @@ namespace ProyectoVeterinaria_DSW1.DAO
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Agenda> listado()
+        {
+            throw new NotImplementedException();
+        }
+
         public TimeSpan ObtenerHoraFin(int idAgenda)
         {
             TimeSpan horaFin = default;

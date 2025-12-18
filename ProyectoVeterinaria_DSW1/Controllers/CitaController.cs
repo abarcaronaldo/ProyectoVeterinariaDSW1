@@ -159,6 +159,47 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MisCitas()
+        {
+            var idStr = HttpContext.Session.GetString("IdDueno");
+            if (!int.TryParse(idStr, out int idDueno))
+                return RedirectToAction("Login", "Login");
+
+            return View(await Task.Run(() => _cita.MisCitas(idDueno)));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BuscarCita(int id)
+        {
+            var idStr = HttpContext.Session.GetString("IdDueno");
+            if (!int.TryParse(idStr, out int idDueno))
+                return RedirectToAction("Login", "Login");
+
+            var cita = await Task.Run(()=> _cita.ObtenerCita(id, idDueno));
+
+            if (cita == null)
+            {
+                TempData["Mensaje"] = "La cita no existe o no le pertenece.";
+                return RedirectToAction("MisCitas");
+            }
+
+            var mascotas = _mascota.ListadoMascotaPorDueno(idDueno);
+            ViewBag.Mascotas = mascotas;
+            return View(cita);
+        }
+
+        [HttpPost]
+        public IActionResult ActualizarCita(EditarCitaViewModel model)
+        {
+            var idStr = HttpContext.Session.GetString("IdDueno");
+            if (!int.TryParse(idStr, out int idDueno))
+                return RedirectToAction("Login", "Login");
+
+            TempData["Mensaje"] = _cita.Actualizar(model, idDueno);
+            return RedirectToAction("MisCitas");
+        }
+
 
     }
 }

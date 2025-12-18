@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using ProyectoVeterinaria_DSW1.Models;
 using ProyectoVeterinaria_DSW1.Repository;
+using ProyectoVeterinaria_DSW1.ViewsModel;
 using System.Data;
 
 namespace ProyectoVeterinaria_DSW1.DAO
@@ -42,7 +43,7 @@ namespace ProyectoVeterinaria_DSW1.DAO
 
         public Dueno buscar(int id)
         {
-            Dueno obj = null;
+            Dueno obj;
             using (SqlConnection cn = new SqlConnection(cadena))
             {
                 using (SqlCommand cmd = new SqlCommand("sp_buscarDueno_id", cn))
@@ -64,6 +65,10 @@ namespace ProyectoVeterinaria_DSW1.DAO
                                 direccion = dr["Direccion"] != DBNull.Value ? dr["Direccion"].ToString() : ""
                             };
                         }
+                        else
+                        {
+                            obj = new Dueno();
+                        }
                     }
                 }
             }
@@ -76,5 +81,11 @@ namespace ProyectoVeterinaria_DSW1.DAO
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Dueno> listado()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
