@@ -2,60 +2,85 @@
     ViewData["Title"] = "Panel del Veterinario";
 }
 
-<h1>Panel del Veterinario</h1>
+<div class="container mt-4">
+    <h1>Panel del Veterinario</h1>
+    <p>Bienvenido, Doctor.</p>
+    @if (TempData["MensajeExito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <strong>¡Logrado!</strong> @TempData["MensajeExito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-<p>
-    Bienvenido, Doctor.
-</p>
+    @if (TempData["MensajeError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <strong>Error:</strong> @TempData["MensajeError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <hr />
 
-<hr />
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>Resumen del día</h3>
+            <div class="card-group text-center">
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Citas para hoy</h5>
+                        <p class="card-text fs-4">@ViewBag.CitasHoy</p>
+                    </div>
+                </div>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Citas pendientes</h5>
+                        <p class="card-text fs-4 text-warning">@ViewBag.CitasPendientes</p>
+                    </div>
+                </div>
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Citas atendidas</h5>
+                        <p class="card-text fs-4 text-success">@ViewBag.CitasAtendidas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<h3>Resumen del día</h3>
+    <hr />
 
-<ul>
-    <li><strong>Citas para hoy:</strong> @ViewBag.CitasHoy</li>
-    <li><strong>Citas pendientes:</strong> @ViewBag.CitasPendientes</li>
-    <li><strong>Citas atendidas:</strong> @ViewBag.CitasAtendidas</li>
-</ul>
+    <h3>Menú de Gestión</h3>
+    <div class="list-group shadow-sm">
 
-<hr />
-
-<h3>Menú principal</h3>
-
-<ul>
-    <li>
-        <a asp-controller="Cita" asp-action="MisCitas">
-            Ver mis citas
+        <a asp-controller="Cita" asp-action="MisCitas"
+           class="list-group-item list-group-item-action py-3">
+            Mis Citas
         </a>
-    </li>
 
-    <li>
-        <a asp-controller="HistoriaClinica" asp-action="Index">
-            Historial de mascotas
+        <a asp-controller="Historial" asp-action="ListarHistorial"
+           class="list-group-item list-group-item-action py-3">
+            Historiales Medicos
         </a>
-    </li>
 
-    <li>
-        <a asp-controller="Horario" asp-action="Index">
-            Mi disponibilidad
+        <a asp-controller="Agenda" asp-action="ListarAgendas"
+           class="list-group-item list-group-item-action py-3">
+            Mis Agendas
         </a>
-    </li>
 
-    <li>
-        <a asp-controller="Veterinario" asp-action="Perfil">
-            Mi perfil
+        <a asp-controller="Agenda" asp-action="ListarAgendas"
+           class="list-group-item list-group-item-action py-3">
+            Mi Agenda
         </a>
-    </li>
-
-    <li>
-        <a asp-controller="Veterinario" asp-action="AgregarVeterinario">
+        <a asp-controller="Veterinario" asp-action="AgregarVeterinario"
+           class="list-group-item list-group-item-action py-3">
             Agregar Veterinario
         </a>
-    </li>
 
-    <li>
-        <a asp-controller="Login" asp-action="Logout">
-            Cerrar sesión
-        </a>
-    </li>
-</ul>
+        <form asp-controller="Login" asp-action="Logout" method="post" class="mt-4">
+            <button type="submit" class="btn btn-outline-danger btn-lg w-100">
+                Cerrar Sesión
+            </button>
+        </form>
+    </div>
+</div>

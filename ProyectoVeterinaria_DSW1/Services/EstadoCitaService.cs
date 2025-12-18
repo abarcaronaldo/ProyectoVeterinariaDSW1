@@ -13,7 +13,6 @@ namespace ProyectoVeterinaria_DSW1.Services
             _estadoCita = estadoCita;
         }
 
-        // Método que devuelve la lista de estados en el formato SelectListItem
         public List<SelectListItem> ObtenerEstadosParaFiltro(int? estadoSeleccionadoId)
         {
             List<EstadoCita> estadosDb = _estadoCita.ListarEstados();

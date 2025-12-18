@@ -16,15 +16,17 @@ namespace ProyectoVeterinaria_DSW1.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (HttpContext.Session.GetString("UsuarioId") == null)
-                return RedirectToAction("Login", "Account");
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdVeterinario")))
+            {         
+                return RedirectToAction("Login", "Login");
+            }
 
-            //datos de pruba por el momento
+            // Aquí podrías llamar a un servicio para traer los datos reales en lugar de fijos
             ViewBag.CitasHoy = 4;
             ViewBag.CitasPendientes = 2;
             ViewBag.CitasAtendidas = 2;
 
-            return await Task.Run(()=> View());
+            return View();
         }
 
         public async Task<IActionResult> AgregarVeterinario()
@@ -37,11 +39,19 @@ namespace ProyectoVeterinaria_DSW1.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(await Task.Run(() => model));
+                return View(model);
             }
 
-            ModelState.AddModelError("", _veterinario.AgregarVeterinario(model));
-            return View(await Task.Run(() => model));
+            string resultado = await Task.Run(() => _veterinario.AgregarVeterinario(model));
+
+            if (resultado.Contains("Se ha registrado"))
+            {
+                TempData["MensajeExito"] = "El veterinario y su cuenta de acceso han sido creados.";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "No se pudo completar el registro: " + resultado);
+            return View(model);
         }
     }
 }

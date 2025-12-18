@@ -13,6 +13,8 @@ builder.Services.AddScoped<IMascota, MascotaDAO>();
 builder.Services.AddScoped<IEstadoCita, EstadoCitaDAO>();
 builder.Services.AddScoped<IHistorial, HistorialDAO>();
 builder.Services.AddScoped<ICita, CitaDAO>();
+builder.Services.AddScoped<IAgenda, AgendaDAO>();
+builder.Services.AddScoped<AgendaService>();
 builder.Services.AddScoped<HistorialService>();
 builder.Services.AddScoped<EstadoCitaService>();
 builder.Services.AddScoped<DuenoService>();

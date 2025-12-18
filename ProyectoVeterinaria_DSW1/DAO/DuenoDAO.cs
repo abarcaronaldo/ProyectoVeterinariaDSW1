@@ -42,7 +42,7 @@ namespace ProyectoVeterinaria_DSW1.DAO
 
         public Dueno buscar(int id)
         {
-            Dueno obj = null;
+            Dueno obj;
             using (SqlConnection cn = new SqlConnection(cadena))
             {
                 using (SqlCommand cmd = new SqlCommand("sp_buscarDueno_id", cn))
@@ -62,21 +62,27 @@ namespace ProyectoVeterinaria_DSW1.DAO
                                 apellido = dr["Apellido"].ToString(),
                                 telefono = dr["Telefono"] != DBNull.Value ? dr["Telefono"].ToString() : "",
                                 direccion = dr["Direccion"] != DBNull.Value ? dr["Direccion"].ToString() : ""
-
-
                             };
+                        }
+                        else
+                        {
+                            obj = new Dueno();
                         }
                     }
                 }
             }
-
             return obj;
 
         }
-
         public string eliminar(Dueno entidad)
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Dueno> listado()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

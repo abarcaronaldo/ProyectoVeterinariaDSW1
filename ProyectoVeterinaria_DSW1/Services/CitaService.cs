@@ -20,5 +20,14 @@ namespace ProyectoVeterinaria_DSW1.Services
         {
             return _citas.VerDetalleCita(idCita);
         }
+
+        public int ActualizarEstadoCita(int idCita, int nuevoIdEstado)
+        {
+             return _citas.ActualizarEstadoCita(idCita, nuevoIdEstado);
+        }
+        public Cita ObtenerCitaPorId(int idCita)
+        {
+            return _citas.ObtenerCitaPorId(idCita);
+        }
     }
 }

@@ -3,6 +3,7 @@
     public class DetalleCita
     {
         public int idcita { get; set; }
+        public int idagenda { get; set; }
         public DateTime fechacita { get; set; }
         public TimeSpan horacita { get; set; }
         public string motivo { get; set; }

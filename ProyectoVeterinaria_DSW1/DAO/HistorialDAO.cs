@@ -48,7 +48,6 @@ namespace ProyectoVeterinaria_DSW1.DAO
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdCita", model.IdCita);
                     cmd.Parameters.AddWithValue("@IdMascota", model.IdMascota);
-                    cmd.Parameters.AddWithValue("@IdVeterinario", model.IdVeterinario);
                     cmd.Parameters.AddWithValue("@Diagnostico", model.Diagnostico);
                     cmd.Parameters.AddWithValue("@Tratamiento", model.Tratamiento);
                     cmd.Parameters.AddWithValue("@Observaciones", string.IsNullOrEmpty(model.Observaciones) ? (object)DBNull.Value : model.Observaciones);
@@ -57,6 +56,37 @@ namespace ProyectoVeterinaria_DSW1.DAO
                 }
             }
             return resultado;
+        }
+
+        public List<HistorialMedico> ListarHistorialesPorVeterinario(int idVeterinario)
+        {
+            List<HistorialMedico> lista = new List<HistorialMedico>();
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                cn.Open();
+                using (SqlCommand cmd = new SqlCommand("sp_ListarHistorialesMedicos", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new HistorialMedico
+                            {
+                                IdHistorial = Convert.ToInt32(dr["IdHistorial"]),
+                                NombreMascota = dr["NombreMascota"].ToString(),
+                                NombreDueno = dr["NombreDueno"].ToString(), 
+                                FechaAtencion = Convert.ToDateTime(dr["FechaAtencion"]),
+                                Diagnostico = dr["Diagnostico"].ToString(),
+                                Tratamiento = dr["Tratamiento"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return lista;
         }
     }
 }

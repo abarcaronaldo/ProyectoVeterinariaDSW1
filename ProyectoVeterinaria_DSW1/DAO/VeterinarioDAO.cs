@@ -69,5 +69,10 @@ namespace ProyectoVeterinaria_DSW1.DAO
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Veterinario> listado()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

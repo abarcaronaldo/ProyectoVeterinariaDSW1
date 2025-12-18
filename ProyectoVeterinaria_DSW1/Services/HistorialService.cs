@@ -21,5 +21,10 @@ namespace ProyectoVeterinaria_DSW1.Services
         {
             return _historialRepository.RegistrarAtencionMedica(model);
         }
+
+        public List<HistorialMedico> ListarHistorialesPorVeterinario(int idVeterinario)
+        {
+            return _historialRepository.ListarHistorialesPorVeterinario(idVeterinario);
+        }
     }
 }

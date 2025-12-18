@@ -6,6 +6,7 @@ namespace ProyectoVeterinaria_DSW1.Repository
     {
         List<Cita> ListarCitasPorVeterinario(int idVeterinario, int? idEstado);
         DetalleCita VerDetalleCita(int idCita);
-        void ActualizarEstado(int idCita, int nuevoIdEstado);
+        int ActualizarEstadoCita(int idCita, int nuevoIdEstado);
+        public Cita ObtenerCitaPorId(int idCita);
     }
 }

@@ -16,20 +16,16 @@ namespace ProyectoVeterinaria_DSW1.Controllers
         [HttpGet]
         public IActionResult CrearHistorial(int idCita)
         {
-            // Prueba con id de veterinario
-            int idVeterinario = 1;
-
+            
             HistorialMedico model = _historialService.ObtenerInfoInicial(idCita);
 
             if (model == null)
             {
                 TempData["MensajeError"] = "Cita o Mascota no encontradas.";
-                return RedirectToAction("ListarCitas", "Cita");
+                return RedirectToAction("MisCitas", "Cita");
             }
-
+            
             model.IdCita = idCita;
-            model.IdVeterinario = idVeterinario;
-
             return View(model); 
         }
 
@@ -47,14 +43,30 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             if (resultado > 0)
             {
                 TempData["MensajeExito"] = "Registro y atencion médica registrada con éxito.";
-                return RedirectToAction("ListarCitas", "Cita");
+                return RedirectToAction("MisCitas", "Cita");
             }
             else
             {
                 ModelState.AddModelError("", "Error al registrar la atención médica. Intente nuevamente.");
                 return View(model);
             }
+            
         }
 
+        public IActionResult ListarHistorial()
+        {
+            string idVetStr = HttpContext.Session.GetString("IdVeterinario");
+
+            if (string.IsNullOrEmpty(idVetStr))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            int idVeterinario = int.Parse(idVetStr);
+
+            var modelo = _historialService.ListarHistorialesPorVeterinario(idVeterinario);
+
+            return View(modelo);
+        }
     }
 }

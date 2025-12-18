@@ -9,11 +9,6 @@ namespace ProyectoVeterinaria_DSW1.DAO
     {
         string cadena = (new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()).GetConnectionString("cn") ?? "";
 
-        public void ActualizarEstado(int idCita, int nuevoIdEstado)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Cita> ListarCitasPorVeterinario(int idVeterinario, int? idEstado)
         {
             List<Cita> temporal = new List<Cita>();
@@ -21,7 +16,7 @@ namespace ProyectoVeterinaria_DSW1.DAO
             {
                 cn.Open();
 
-                using (SqlCommand cmd = new SqlCommand("sp_ListarCitasVeterinari", cn))
+                using (SqlCommand cmd = new SqlCommand("sp_ListarCitasVet", cn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
@@ -90,6 +85,55 @@ namespace ProyectoVeterinaria_DSW1.DAO
                 }
             }
             return temporal;
+        }
+
+        public int ActualizarEstadoCita(int idCita, int nuevoIdEstado)
+        {
+            int resultado = 0;
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                cn.Open();
+                using (SqlCommand cmd = new SqlCommand("sp_ActualizarEstadoCita", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCita", idCita);
+                    cmd.Parameters.AddWithValue("@NuevoIdEstado", nuevoIdEstado);
+
+                    resultado = cmd.ExecuteNonQuery();
+                }
+            }
+            return resultado;
+        }
+
+        public Cita ObtenerCitaPorId(int idCita)
+        {
+            Cita cita = null;
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                cn.Open();
+                using (SqlCommand cmd = new SqlCommand("sp_ObtenerDetalleCitaPorId", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCita", idCita);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            cita = new Cita
+                            {
+                                idcita = Convert.ToInt32(dr["IdCita"]),
+                                fechacita = Convert.ToDateTime(dr["FechaCita"]),
+                                horacita = (TimeSpan)dr["HoraCita"],
+                                estado = dr["estado"].ToString(),
+                                especie = dr["Especie"].ToString() + " (" + dr["nombreMascota"].ToString() + ")",
+                                nombredueno = dr["nombredueno"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            return cita;
         }
     }
 }
