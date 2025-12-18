@@ -2,50 +2,95 @@
     ViewData["Title"] = "Panel del Cliente";
 }
 
-<h1>Panel del Cliente</h1>
+<style>
+    body {
+        background: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<p>
-    Bienvenido @Context.Session.GetString("NombreUsuario")
-</p>
+    .panel-container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
 
-<hr />
+    h1 {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
 
-<h3>Menú principal</h3>
+    h3 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 25px;
+        text-align: center;
+    }
 
-<ul>
-    <li>
-        <a asp-controller="Dueno" asp-action="Informacion">
-            Informacion personal
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
+
+    .menu-item {
+        display: block;
+        padding: 20px;
+        text-align: center;
+        background: #007bff;
+        color: white;
+        font-weight: 600;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+        .menu-item:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .menu-item.logout {
+            background: #6c757d;
+        }
+
+            .menu-item.logout:hover {
+                background: #5a6268;
+            }
+</style>
+
+<div class="panel-container">
+    <h1>Panel del Cliente</h1>
+    <p style="text-align:center; font-size:16px; color:#555;">
+        Bienvenido, @User.Identity.Name
+    </p>
+
+    <hr />
+
+    <h3>Menú principal</h3>
+
+    <div class="menu-grid">
+        <a asp-controller="Dueno" asp-action="Informacion" class="menu-item">
+            Información personal
         </a>
-    </li>
-
-    <li>
-        <a asp-controller="Mascota" asp-action="AgregarMascota">
+        <a asp-controller="Mascota" asp-action="AgregarMascota" class="menu-item">
             Agregar mascota
         </a>
-    </li>
-
-    <li>
-        <a asp-controller="Mascota" asp-action="ListadoMascota">
+        <a asp-controller="Mascota" asp-action="MisMascotas" class="menu-item">
             Mis mascotas
         </a>
-    </li>
-
-    <li>
-        <a asp-controller="Dueno" asp-action="ReservarCita">
+        <a asp-controller="Dueno" asp-action="ReservarCita" class="menu-item">
             Reservar cita
         </a>
-    </li>
-
-    <li>
-        <a asp-controller="Cita" asp-action="MisCitas">
+        <a asp-controller="Cita" asp-action="MisCitas" class="menu-item">
             Ver mis citas
         </a>
-    </li>
-
-    <li>
-        <a asp-controller="Login" asp-action="Logout">
+        <a asp-controller="Login" asp-action="Logout" class="menu-item logout">
             Cerrar sesión
         </a>
-    </li>
-</ul>
+    </div>
+</div>

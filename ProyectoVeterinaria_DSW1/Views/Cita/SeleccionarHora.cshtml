@@ -1,28 +1,129 @@
 ﻿@using ProyectoVeterinaria_DSW1.ViewsModel
 @model SeleccionarHoraViewModel
 
-<h2>Seleccionar hora para @Model.FechaCita.ToString("yyyy-MM-dd")</h2>
+<style>
+    body {
+        background: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<form method="post" asp-action="SeleccionarHora">
-    <input type="hidden" name="IdAgenda" value="@Model.IdAgenda" />
-    <input type="hidden" name="FechaCita" value="@Model.FechaCita.ToString("yyyy-MM-dd")" />
-    <input type="hidden" name="DuracionCitaMin" value="@Model.DuracionCitaMin" />
+    .hora-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
 
-    <div class="form-group">
-        <label>Hora deseada:</label>
-        <input type="time"
-               name="HoraDeseada"
-               class="form-control"
-               min="@Model.HoraInicio.ToString(@"hh\:mm")"
-               max="@Model.HoraFin.ToString(@"hh\:mm")"
-               step="60"
-               required />
+    h2 {
+        text-align: center;
+        color: #007bff;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .info-horario {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+        color: #333;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #555;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    input[type="time"] {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        transition: border 0.3s;
+    }
+
+        input[type="time"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+    .btn-secondary {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 15px;
+        background: #6c757d;
+        color: white;
+        padding: 12px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="hora-container">
+    <h2>Seleccionar hora para @Model.FechaCita.ToString("yyyy-MM-dd")</h2>
+
+    <div class="info-horario">
+        Horario disponible: @Model.HoraInicio.ToString(@"hh\:mm") a @Model.HoraFin.ToString(@"hh\:mm")
     </div>
 
-    <br />
-    <button type="submit" class="btn btn-primary">Continuar</button>
-</form>
+    <form method="post" asp-action="SeleccionarHora">
+        <input type="hidden" name="IdAgenda" value="@Model.IdAgenda" />
+        <input type="hidden" name="FechaCita" value="@Model.FechaCita.ToString("yyyy-MM-dd")" />
+        <input type="hidden" name="DuracionCitaMin" value="@Model.DuracionCitaMin" />
 
-<br />
+        <div class="form-group">
+            <label>Hora deseada:</label>
+            <input type="time"
+                   name="HoraDeseada"
+                   min="@Model.HoraInicio.ToString(@"hh\:mm")"
+                   max="@Model.HoraFin.ToString(@"hh\:mm")"
+                   step="60"
+                   required />
+        </div>
 
-<a asp-action="BuscarDisponibilidad" asp-route-fecha="@Model.FechaCita.ToString("yyyy-MM-dd")" class="btn btn-secondary">← Volver</a>
+        <button type="submit" class="btn btn-primary">Continuar</button>
+    </form>
+
+    <a asp-action="BuscarDisponibilidad" asp-route-fecha="@Model.FechaCita.ToString("yyyy-MM-dd")" class="btn btn-secondary">← Volver</a>
+</div>

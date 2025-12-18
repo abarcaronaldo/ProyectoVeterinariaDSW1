@@ -1,39 +1,139 @@
 ﻿@{
-    ViewData["Title"] = "ConfirmarCita";
+    ViewData["Title"] = "Confirmar Cita";
 }
 
-<h3>Confirmar Cita</h3>
+<style>
+    body {
+        background: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<p><strong>Fecha:</strong> @ViewBag.FechaCita</p>
-<p><strong>Hora sugerida:</strong> @ViewBag.HoraSugerida</p>
+    .confirmar-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
 
-<form asp-action="ConfirmarCita" method="post">
+    h3 {
+        text-align: center;
+        color: #007bff;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
 
-    <input type="hidden" name="IdAgenda" value="@ViewBag.IdAgenda" />
-    <input type="hidden" name="FechaCita" value="@ViewBag.FechaCita" />
-    <input type="hidden" name="HoraCita" value="@ViewBag.HoraSugerida" />
+    .resumen-cita {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
 
+        .resumen-cita p {
+            margin: 8px 0;
+            font-weight: 600;
+            color: #333;
+        }
 
+    .form-group {
+        margin-bottom: 20px;
+    }
 
-    <div class="form-group">
-        <label>Mascota</label>
-        <select name="IdMascota" class="form-control" required>
-            @foreach (var m in ViewBag.Mascotas)
-            {
-                <option value="@m.idmascota">@m.nombre</option>
-            }
-        </select>
+    label {
+        font-weight: 600;
+        color: #555;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    select, textarea {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        transition: border 0.3s;
+    }
+
+        select:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-success {
+        background: #28a745;
+        color: white;
+    }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+    .btn-secondary {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 15px;
+        background: #6c757d;
+        color: white;
+        padding: 12px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="confirmar-container">
+    <h3>Confirmar Cita</h3>
+
+    <div class="resumen-cita">
+        <p><strong>Fecha:</strong> @ViewBag.FechaCita</p>
+        <p><strong>Hora sugerida:</strong> @ViewBag.HoraSugerida</p>
     </div>
 
-    <div class="form-group">
-        <label>Motivo de la cita</label>
-        <textarea name="Motivo" class="form-control" required></textarea>
-    </div>
+    <form asp-action="ConfirmarCita" method="post">
+        <input type="hidden" name="IdAgenda" value="@ViewBag.IdAgenda" />
+        <input type="hidden" name="FechaCita" value="@ViewBag.FechaCita" />
+        <input type="hidden" name="HoraCita" value="@ViewBag.HoraSugerida" />
 
-    <br />
-    <button type="submit" class="btn btn-success">Registrar Cita</button>
-</form>
-<br />
-<a asp-controller="Dueno" asp-action="ReservarCita" class="btn btn-secondary">← Volver</a>
+        <div class="form-group">
+            <label>Mascota</label>
+            <select name="IdMascota" required>
+                @foreach (var m in ViewBag.Mascotas)
+                {
+                    <option value="@m.idmascota">@m.nombre</option>
+                }
+            </select>
+        </div>
 
+        <div class="form-group">
+            <label>Motivo de la cita</label>
+            <textarea name="Motivo" rows="4" required></textarea>
+        </div>
 
+        <button type="submit" class="btn btn-success">Registrar Cita</button>
+    </form>
+
+    <a asp-controller="Dueno" asp-action="ReservarCita" class="btn btn-secondary">← Volver</a>
+</div>
