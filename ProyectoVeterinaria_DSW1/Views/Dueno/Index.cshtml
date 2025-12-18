@@ -66,7 +66,7 @@
 <div class="panel-container">
     <h1>Panel del Cliente</h1>
     <p style="text-align:center; font-size:16px; color:#555;">
-        Bienvenido, @User.Identity.Name
+        Bienvenido, @Context.Session.GetString("NombreUsuario")
     </p>
 
     <hr />
@@ -80,7 +80,7 @@
         <a asp-controller="Mascota" asp-action="AgregarMascota" class="menu-item">
             Agregar mascota
         </a>
-        <a asp-controller="Mascota" asp-action="MisMascotas" class="menu-item">
+        <a asp-controller="Mascota" asp-action="ListadoMascota" class="menu-item">
             Mis mascotas
         </a>
         <a asp-controller="Dueno" asp-action="ReservarCita" class="menu-item">
