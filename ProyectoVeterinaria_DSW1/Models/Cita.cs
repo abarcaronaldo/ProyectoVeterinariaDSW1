@@ -9,5 +9,6 @@
         public String? Motivo { get; set; }
         public int IdAgenda { get; set; }
         public int IdDueno { get; set; }
+        public int IdEstado { get; set;}
     }
 }

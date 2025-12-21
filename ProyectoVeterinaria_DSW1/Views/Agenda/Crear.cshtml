@@ -1,0 +1,51 @@
+﻿@model AgendaVeterinario
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Registrar Horario";
+}
+<div class="container mt-5">
+    <h2><i class="fas fa-clock"></i> Registrar Nuevo Horario</h2>
+    <hr />
+
+    <form asp-action="Crear" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @* Campo Oculto para IdVeterinario *@
+        <input type="hidden" asp-for="IdVeterinario" />
+
+        <div class="mb-3">
+            <label asp-for="DiaSemana" class="form-label">Día de la Semana</label>
+            <select asp-for="DiaSemana"
+                    asp-items="@(new SelectList(ViewBag.DiasSemana, "Value", "Text"))"
+                    class="form-control">
+                <option value="">-- Seleccione el Día --</option>
+            </select>
+            <span asp-validation-for="DiaSemana" class="text-danger"></span>
+        </div>
+
+        @*Hora de Inicio *@
+        <div class="mb-3">
+            <label asp-for="HoraInicio" class="form-label">Hora de Inicio</label>
+            <input asp-for="HoraInicio" type="time" class="form-control" />
+            <span asp-validation-for="HoraInicio" class="text-danger"></span>
+        </div>
+
+        @*Hora de Fin *@
+        <div class="mb-3">
+            <label asp-for="HoraFin" class="form-label">Hora de Fin</label>
+            <input asp-for="HoraFin" type="time" class="form-control" />
+            <span asp-validation-for="HoraFin" class="text-danger"></span>
+        </div>
+
+        @*Cupo Máximo *@
+        <div class="mb-3">
+            <label asp-for="CupoMaximo" class="form-label">Cupo Máximo por Bloque</label>
+            <input asp-for="CupoMaximo" type="number" class="form-control" />
+            <span asp-validation-for="CupoMaximo" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Registrar Horario</button>
+        <a asp-action="ListarAgendas" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

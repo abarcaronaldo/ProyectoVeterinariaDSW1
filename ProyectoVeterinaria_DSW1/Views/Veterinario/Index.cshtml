@@ -97,7 +97,21 @@
     <p style="text-align:center; font-size:16px; color:#555;">
         Bienvenido, @Context.Session.GetString("NombreUsuario")
     </p>
+    @if (TempData["MensajeExito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <strong>¡Logrado!</strong> @TempData["MensajeExito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
+    @if (TempData["MensajeError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <strong>Error:</strong> @TempData["MensajeError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
     <h3>Resumen del día</h3>
     <div class="summary-cards">
         <div class="card">
@@ -117,9 +131,8 @@
     <h3>Menú principal</h3>
     <div class="menu-grid">
         <a asp-controller="Cita" asp-action="MisCitas" class="menu-item">Ver mis citas</a>
-        <a asp-controller="HistoriaClinica" asp-action="Index" class="menu-item">Historial de mascotas</a>
-        <a asp-controller="Horario" asp-action="Index" class="menu-item">Mi disponibilidad</a>
-        <a asp-controller="Veterinario" asp-action="Perfil" class="menu-item">Mi perfil</a>
+        <a asp-controller="Historial" asp-action="ListarHistorial" class="menu-item">Historiales de mascotas</a>
+        <a asp-controller="Agenda" asp-action="ListarAgendas" class="menu-item">Mi agenda</a>
         <a asp-controller="Veterinario" asp-action="AgregarVeterinario" class="menu-item">Agregar veterinario</a>
         <a asp-controller="Login" asp-action="Logout" class="menu-item logout">Cerrar sesión</a>
     </div>

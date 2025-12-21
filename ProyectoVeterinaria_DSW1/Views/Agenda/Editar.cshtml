@@ -1,0 +1,61 @@
+﻿@model ProyectoVeterinaria_DSW1.Models.AgendaVeterinario
+
+@{
+    ViewData["Title"] = "Editar Agenda";
+}
+
+<h1>Editar Agenda</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Editar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="IdAgenda" />
+            <input type="hidden" asp-for="IdVeterinario" />
+
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold">Día de la Semana</label>
+                <select asp-for="DiaSemana" class="form-control bg-light"
+                        asp-items="@(new SelectList(ViewBag.DiasSemana, "Value", "Text"))" disabled></select>
+                <input type="hidden" asp-for="DiaSemana" />
+                <small class="text-muted">
+                    <i class="bi bi-exclamation-triangle"></i> El día no se puede cambiar por seguridad de las citas programadas.
+                </small>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoraInicio" class="control-label"></label>
+                <input asp-for="HoraInicio" type="time" class="form-control" />
+                <span asp-validation-for="HoraInicio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoraFin" class="control-label"></label>
+                <input asp-for="HoraFin" type="time" class="form-control" />
+                <span asp-validation-for="HoraFin" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="CupoMaximo" class="control-label"></label>
+                <input asp-for="CupoMaximo" class="form-control" />
+                <span asp-validation-for="CupoMaximo" class="text-danger"></span>
+                <small class="text-info">Ponga "0" si desea cerrar las reservas para este día.</small>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary shadow-sm">
+                    <i class="bi bi-save"></i> Guardar Cambios
+                </button>
+                <a asp-action="ListarAgendas" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

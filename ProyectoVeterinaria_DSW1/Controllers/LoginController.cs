@@ -40,8 +40,8 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             }
 
             //guardar datos en sesion
-            HttpContext.Session.SetString("UsuarioId",
-                                  usuario.idusuario.ToString());
+            //HttpContext.Session.SetString("UsuarioId",
+             //                     usuario.idusuario.ToString());
 
             if (usuario.idrol == Roles.DUENO)
             {

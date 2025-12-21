@@ -7,8 +7,14 @@ namespace ProyectoVeterinaria_DSW1.Repository
     {
         //metodos adicionales solo para cita
         int RegistrarCita(Cita objeto);
-        IEnumerable<CitaListadoViewModel> MisCitas(int idDueno);
+        IEnumerable<CitaListadoViewModel> MisCitas(int idDueno); //del dueño
         CitaListadoViewModel BuscarCita(int idCita, int idDueno);
+
+        //----------------------
+        IEnumerable<DetalleCitaViewModel> ListarCitasPorVeterinario(int idVeterinario, int? idEstado);
+        DetalleCita VerDetalleCita(int idCita);
+        int ActualizarEstadoCita(int idCita, int nuevoIdEstado);
+        public DetalleCitaViewModel ObtenerCitaPorId(int idCita);
 
     }
 }

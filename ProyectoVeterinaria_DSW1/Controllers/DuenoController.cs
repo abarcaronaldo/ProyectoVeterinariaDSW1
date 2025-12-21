@@ -26,7 +26,7 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             if (!int.TryParse(idUsuarioStr, out int idDueno))
                 return RedirectToAction("Login", "Login");
 
-            return View(await Task.Run(() => _dueno.BuscarDuenoId(idDueno)));
+            return View(await Task.Run(() => _dueno.ObtenerDuenoPorId(idDueno)));
 
         }
 

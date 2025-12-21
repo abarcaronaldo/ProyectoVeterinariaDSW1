@@ -20,6 +20,11 @@ namespace ProyectoVeterinaria_DSW1.Services
             return _veterinario.buscar(id);
         }
 
+        public Veterinario ObtenerVeterinarioPorId(int idVeterinario)
+        {
+            return _veterinario.ObtenerVeterinarioPorId(idVeterinario);
+        }
+
         public string AgregarVeterinario(VeterinarioViewModel model)
         {
             string mensaje = "";

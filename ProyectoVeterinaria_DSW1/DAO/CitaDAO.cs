@@ -27,7 +27,7 @@ namespace ProyectoVeterinaria_DSW1.DAO
                     int resultado = Convert.ToInt32(cmd.ExecuteScalar());
 
                     if (resultado == 0)
-                        return "La cita no existe o no le pertenece";
+                        return "La cita no puede ser modificada";
 
                     return "Cita actualizada correctamente";
                 }
@@ -36,6 +36,24 @@ namespace ProyectoVeterinaria_DSW1.DAO
             {
                 return "Ocurrió un error al actualizar la cita";
             }
+        }
+
+        public int ActualizarEstadoCita(int idCita, int nuevoIdEstado)
+        {
+            int resultado = 0;
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                cn.Open();
+                using (SqlCommand cmd = new SqlCommand("sp_ActualizarEstadoCita", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCita", idCita);
+                    cmd.Parameters.AddWithValue("@NuevoIdEstado", nuevoIdEstado);
+
+                    resultado = cmd.ExecuteNonQuery();
+                }
+            }
+            return resultado;
         }
 
         public string agregar(Cita entidad)
@@ -91,6 +109,48 @@ namespace ProyectoVeterinaria_DSW1.DAO
             throw new NotImplementedException();
         }
 
+        public IEnumerable<DetalleCitaViewModel> ListarCitasPorVeterinario(int idVeterinario, int? idEstado)
+        {
+            List<DetalleCitaViewModel> temporal = new List<DetalleCitaViewModel>();
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                cn.Open();
+
+                using (SqlCommand cmd = new SqlCommand("sp_ListarCitasVet", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
+
+                    if (idEstado.HasValue)
+                    {
+                        cmd.Parameters.AddWithValue("@IdEstado", idEstado.Value);
+                    }
+                    else
+                    {
+                        // Pasamos DBNull para activar el "listar todo" en el SP
+                        cmd.Parameters.AddWithValue("@IdEstado", DBNull.Value);
+                    }
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            temporal.Add(new DetalleCitaViewModel
+                            {
+                                idcita = (int)dr["IdCita"],
+                                fechacita = (DateTime)dr["FechaCita"],
+                                horacita = dr.GetTimeSpan(dr.GetOrdinal("HoraCita")),
+                                estado = dr["Estado"].ToString(),
+                                especie = dr["Especie"].ToString(),
+                                nombredueno = dr["NombreDueno"].ToString(),
+                            });
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
         public IEnumerable<CitaListadoViewModel> MisCitas(int idDueno)
         {
             var lista = new List<CitaListadoViewModel>();
@@ -123,6 +183,37 @@ namespace ProyectoVeterinaria_DSW1.DAO
                 }
             }
             return lista;
+        }
+
+        public DetalleCitaViewModel ObtenerCitaPorId(int idCita)
+        {
+            DetalleCitaViewModel cita = null;
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                cn.Open();
+                using (SqlCommand cmd = new SqlCommand("sp_ObtenerDetalleCitaPorId", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCita", idCita);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            cita = new DetalleCitaViewModel
+                            {
+                                idcita = Convert.ToInt32(dr["IdCita"]),
+                                fechacita = Convert.ToDateTime(dr["FechaCita"]),
+                                horacita = (TimeSpan)dr["HoraCita"],
+                                estado = dr["estado"].ToString(),
+                                especie = dr["Especie"].ToString() + " (" + dr["nombreMascota"].ToString() + ")",
+                                nombredueno = dr["nombredueno"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            return cita;
         }
 
         public int RegistrarCita(Cita objeto)
@@ -164,6 +255,42 @@ namespace ProyectoVeterinaria_DSW1.DAO
             }
 
             return idGenerado;
+        }
+
+        public DetalleCita VerDetalleCita(int idCita)
+        {
+            DetalleCita temporal = new DetalleCita();
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                cn.Open();
+                using (SqlCommand cmd = new SqlCommand("sp_VerDetalleCita", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCita", idCita);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            temporal = new DetalleCita
+                            {
+                                idcita = (int)dr["IdCita"],
+                                fechacita = (DateTime)dr["FechaCita"],
+                                horacita = dr.GetTimeSpan(dr.GetOrdinal("HoraCita")),
+                                motivo = dr["Motivo"].ToString(),
+                                fechacreacion = (DateTime)dr["FechaCreacion"],
+                                estado = dr["Estado"].ToString(),
+                                nombremascota = dr["NombreMascota"].ToString(),
+                                especie = dr["Especie"].ToString(),
+                                raza = dr["Raza"].ToString(),
+                                nombredueno = dr["NombreDueno"].ToString(),
+                                apellidodueno = dr["ApellidoDueno"].ToString(),
+                                telefonodueno = dr["TelefonoDueno"].ToString(),
+                            };
+                        }
+                    }
+                }
+            }
+            return temporal;
         }
 
     }

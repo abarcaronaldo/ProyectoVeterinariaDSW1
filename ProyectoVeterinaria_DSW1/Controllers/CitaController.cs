@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProyectoVeterinaria_DSW1.Constants;
+using ProyectoVeterinaria_DSW1.Models;
 using ProyectoVeterinaria_DSW1.Services;
 using ProyectoVeterinaria_DSW1.ViewsModel;
 
@@ -9,11 +10,13 @@ namespace ProyectoVeterinaria_DSW1.Controllers
     {
         CitaService _cita;
         MascotaService _mascota;
+        EstadoCitaService _estadoCitaService;
 
-        public CitaController(CitaService cita, MascotaService mascota)
+        public CitaController(CitaService cita, MascotaService mascota, EstadoCitaService estadoCitaService)
         {
             _cita = cita;
             _mascota = mascota;
+            _estadoCitaService = estadoCitaService;
         }
 
         //primer paso, seleccionar un horario de las agendas, esto nos muestra una vista de los veterinarios disponibles a esa fecha y su horario.
@@ -160,7 +163,7 @@ namespace ProyectoVeterinaria_DSW1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> MisCitas()
+        public async Task<IActionResult> MisCitasDueno()
         {
             var idStr = HttpContext.Session.GetString("IdDueno");
             if (!int.TryParse(idStr, out int idDueno))
@@ -200,6 +203,98 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             return RedirectToAction("MisCitas");
         }
 
+        //------------------------------------------------
+        private void CargarEstados(int? estadoSeleccionado = null)
+        {
+            ViewBag.ListaEstados = _estadoCitaService.ObtenerEstadosParaFiltro(estadoSeleccionado);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MisCitas()
+        {
+            return await ObtenerCitasYMostrarVista(null);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MisCitas(int? IdEstadoFiltro)
+        {
+            return await ObtenerCitasYMostrarVista(IdEstadoFiltro);
+        }
+
+        private async Task<IActionResult> ObtenerCitasYMostrarVista(int? IdEstadoFiltro)
+        {
+            CargarEstados(IdEstadoFiltro);
+
+            string idVetSession = HttpContext.Session.GetString("IdVeterinario");
+
+            if (string.IsNullOrEmpty(idVetSession))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            int idVeterinarioReal = int.Parse(idVetSession);
+
+            try
+            {
+                IEnumerable<DetalleCitaViewModel> listaCitas = await Task.Run(() =>
+                {
+                    return _cita.ListarCitasPorVeterinario(idVeterinarioReal, IdEstadoFiltro);
+                });
+
+                ViewBag.Filtro = IdEstadoFiltro.HasValue ? $"Estado ID: {IdEstadoFiltro.Value}" : "TODOS los Estados";
+                ViewBag.Veterinario = idVeterinarioReal;
+
+                return View("PruebaCita", listaCitas);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = $"Error en el flujo: {ex.Message}";
+                return View("PruebaCita", new List<DetalleCitaViewModel>());
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> VerDetalle(int idCita)
+        {
+            if (idCita <= 0)
+            {
+                return RedirectToAction("MisCitas");
+            }
+
+            DetalleCita detalle = await Task.Run(() =>
+            {
+                return _cita.VerDetalleCita(idCita);
+            });
+
+            if (detalle == null)
+            {
+                TempData["MensajeError"] = $"No se encontró el detalle para la Cita ID: {idCita}";
+                return RedirectToAction("MisCitas");
+            }
+            return View(detalle);
+        }
+
+        [HttpGet]
+        public IActionResult EstadoCita(int id)
+        {
+            var cita = _cita.ObtenerCitaPorId(id);
+            if (cita == null) return NotFound();
+
+            return View(cita);
+        }
+
+        [HttpPost]
+        public IActionResult CambiarEstado(int idCita, int nuevoIdEstado)
+        {
+            int res = _cita.ActualizarEstadoCita(idCita, nuevoIdEstado);
+
+            if (res > 0)
+                TempData["MensajeExito"] = "Estado actualizado correctamente.";
+            else
+                TempData["MensajeError"] = "No se pudo cambiar el estado.";
+
+            return RedirectToAction("MisCitas");
+        }
 
     }
 }

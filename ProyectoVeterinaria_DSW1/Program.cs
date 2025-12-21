@@ -12,12 +12,17 @@ builder.Services.AddScoped<IVeterinario, VeterinarioDAO>();
 builder.Services.AddScoped<IMascota, MascotaDAO>();
 builder.Services.AddScoped<IAgenda, AgendaDAO>();
 builder.Services.AddScoped<ICita, CitaDAO>();
+builder.Services.AddScoped<IEstadoCita, EstadoCitaDAO>();
+builder.Services.AddScoped<IHistorial, HistorialDAO>();
 builder.Services.AddScoped<DuenoService>();
 builder.Services.AddScoped<CitaService>();
 builder.Services.AddScoped<MascotaService>();
 builder.Services.AddScoped<VeterinarioService>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<CitaService>();
+builder.Services.AddScoped<AgendaService>();
+builder.Services.AddScoped<EstadoCitaService>();
+builder.Services.AddScoped<HistorialService>();
 
 //sesion
 builder.Services.AddDistributedMemoryCache(); //guarda sesion en ram

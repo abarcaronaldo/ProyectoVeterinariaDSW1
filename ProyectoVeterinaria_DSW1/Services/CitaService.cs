@@ -22,7 +22,7 @@ namespace ProyectoVeterinaria_DSW1.Services
             return _agenda.BuscarDisponibilidad(fecha);
         }
 
-        public Agenda ObtenerAgendaPorId(int idAgenda)
+        public AgendaVeterinario ObtenerAgendaPorId(int idAgenda)
         {
             return _agenda.buscar(idAgenda);
         }
@@ -108,6 +108,26 @@ namespace ProyectoVeterinaria_DSW1.Services
             };
 
             return _cita.actualizar(cita);
+        }
+
+        //----------------------------------------------
+        public IEnumerable<DetalleCitaViewModel> ListarCitasPorVeterinario(int idVeterinario, int? idEstado)
+        {
+            return _cita.ListarCitasPorVeterinario(idVeterinario, idEstado);
+        }
+
+        public DetalleCita VerDetalleCita(int idCita)
+        {
+            return _cita.VerDetalleCita(idCita);
+        }
+
+        public int ActualizarEstadoCita(int idCita, int nuevoIdEstado)
+        {
+            return _cita.ActualizarEstadoCita(idCita, nuevoIdEstado);
+        }
+        public DetalleCitaViewModel ObtenerCitaPorId(int idCita)
+        {
+            return _cita.ObtenerCitaPorId(idCita);
         }
 
     }

@@ -39,7 +39,7 @@ namespace ProyectoVeterinaria_DSW1.DAO
 
         public Veterinario buscar(int id)
         {
-            Veterinario obj = null;
+            Veterinario obj;
             using (SqlConnection cn = new SqlConnection(cadena))
             {
                 using (SqlCommand cmd = new SqlCommand("sp_buscarVeterinario_id", cn))
@@ -59,6 +59,10 @@ namespace ProyectoVeterinaria_DSW1.DAO
                                 apellido = dr["Apellido"].ToString(),
                             };
                         }
+                        else
+                        {
+                            obj = new Veterinario();
+                        }
                     }
                 }
             }
@@ -73,6 +77,38 @@ namespace ProyectoVeterinaria_DSW1.DAO
         public IEnumerable<Veterinario> listado()
         {
             throw new NotImplementedException();
+        }
+
+        public Veterinario ObtenerVeterinarioPorId(int idVeterinario)
+        {
+            Veterinario obj;
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_buscarVeterinario", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            obj = new Veterinario
+                            {
+                                idveterinario = Convert.ToInt32(dr["IdVeterinario"]),
+                                idusuario = Convert.ToInt32(dr["IdUsuario"]),
+                                nombre = dr["Nombre"].ToString(),
+                                apellido = dr["Apellido"].ToString(),
+                            };
+                        }
+                        else
+                        {
+                            obj = new Veterinario();
+                        }
+                    }
+                }
+            }
+            return obj;
         }
     }
 }

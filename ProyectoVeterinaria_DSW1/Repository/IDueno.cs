@@ -6,6 +6,6 @@ namespace ProyectoVeterinaria_DSW1.Repository
     public interface IDueno:ICrud<Dueno>, IConsulta<Dueno>
     {
         //agregar metodos especiales si se requieren
-        
+        Dueno BuscarDuenoPorId(int idDueno);
     }
 }

@@ -22,6 +22,11 @@ namespace ProyectoVeterinaria_DSW1.Services
 
         }
 
+        public Dueno ObtenerDuenoPorId(int idDueno)
+        {
+            return _dueno.BuscarDuenoPorId(idDueno);
+        }
+
         public string RegistrarDueno(DuenoViewModel model)
         {
             string mensaje = "";
@@ -32,7 +37,7 @@ namespace ProyectoVeterinaria_DSW1.Services
                 {
                     email = model.email,
                     password = model.password,
-                    idrol = Roles.VETERINARIO
+                    idrol = Roles.DUENO
                 };
 
                 int idUsuario = _usuario.InsertarUsuario(user);

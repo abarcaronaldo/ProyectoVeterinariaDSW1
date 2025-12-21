@@ -1,0 +1,46 @@
+﻿@model ProyectoVeterinaria_DSW1.ViewsModel.DetalleCitaViewModel
+@{
+    ViewData["Title"] = "Cambiar Estado de Cita";
+}
+
+<h2>Actualizar Estado - Cita #@Model.idcita</h2>
+
+<div class="container mt-4">
+    <div class="card shadow" style="max-width: 500px; margin: auto;">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Actualizar Estado - Cita #@Model.idcita</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="CambiarEstado" method="post">
+                <input type="hidden" name="idcita" value="@Model.idcita" />
+
+                <div class="mb-3">
+                    <label class="fw-bold">Datos de la Cita:</label>
+                    <p class="border-bottom pb-2">
+                        <strong>ID:</strong> @Model.idcita <br />
+                        <strong>Dueño:</strong> @Model.nombredueno <br />
+                        <strong>Mascota:</strong> @Model.especie
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="nuevoIdEstado" class="form-label fw-bold text-primary">Seleccione el Nuevo Estado:</label>
+                    <select name="nuevoIdEstado" id="nuevoIdEstado" class="form-select form-select-lg border-primary">
+                        <option value="1">Por Atender (Pendiente)</option>
+                        <option value="2">Atendida (Completada)</option>
+                        <option value="3">Cancelada</option>
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success">
+                        Confirmar Cambio
+                    </button>
+                    <a asp-action="MisCitas" class="btn btn-outline-secondary">
+                        Regresar al Listado
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
