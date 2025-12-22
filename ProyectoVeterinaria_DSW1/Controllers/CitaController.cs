@@ -203,27 +203,23 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             return RedirectToAction("MisCitasDueno");
         }
 
-        //------------------------------------------------
+        //-------------------------------------------------------------------
+
         private void CargarEstados(int? estadoSeleccionado = null)
         {
             ViewBag.ListaEstados = _estadoCitaService.ObtenerEstadosParaFiltro(estadoSeleccionado);
         }
 
         [HttpGet]
-        public async Task<IActionResult> MisCitas()
+        public async Task<IActionResult> MisCitas(int? IdEstadoFiltro, string nombreDueno)
         {
-            return await ObtenerCitasYMostrarVista(null);
+            return await ObtenerCitasYMostrarVista(IdEstadoFiltro, nombreDueno);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> MisCitas(int? IdEstadoFiltro)
-        {
-            return await ObtenerCitasYMostrarVista(IdEstadoFiltro);
-        }
-
-        private async Task<IActionResult> ObtenerCitasYMostrarVista(int? IdEstadoFiltro)
+        private async Task<IActionResult> ObtenerCitasYMostrarVista(int? IdEstadoFiltro, string nombreDueno)
         {
             CargarEstados(IdEstadoFiltro);
+            ViewBag.BusquedaNombre = nombreDueno;
 
             string idVetSession = HttpContext.Session.GetString("IdVeterinario");
 
@@ -238,7 +234,7 @@ namespace ProyectoVeterinaria_DSW1.Controllers
             {
                 IEnumerable<DetalleCitaViewModel> listaCitas = await Task.Run(() =>
                 {
-                    return _cita.ListarCitasPorVeterinario(idVeterinarioReal, IdEstadoFiltro);
+                    return _cita.ListarCitasPorVeterinario(idVeterinarioReal, IdEstadoFiltro, nombreDueno);
                 });
 
                 ViewBag.Filtro = IdEstadoFiltro.HasValue ? $"Estado ID: {IdEstadoFiltro.Value}" : "TODOS los Estados";

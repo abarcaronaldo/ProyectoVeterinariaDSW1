@@ -109,27 +109,19 @@ namespace ProyectoVeterinaria_DSW1.DAO
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DetalleCitaViewModel> ListarCitasPorVeterinario(int idVeterinario, int? idEstado)
+        public IEnumerable<DetalleCitaViewModel> ListarCitasPorVeterinario(int idVeterinario, int? idEstado, string nombreDueno)
         {
             List<DetalleCitaViewModel> temporal = new List<DetalleCitaViewModel>();
             using (SqlConnection cn = new SqlConnection(cadena))
             {
                 cn.Open();
-
                 using (SqlCommand cmd = new SqlCommand("sp_ListarCitasVet", cn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
 
-                    if (idEstado.HasValue)
-                    {
-                        cmd.Parameters.AddWithValue("@IdEstado", idEstado.Value);
-                    }
-                    else
-                    {
-                        // Pasamos DBNull para activar el "listar todo" en el SP
-                        cmd.Parameters.AddWithValue("@IdEstado", DBNull.Value);
-                    }
+                    cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
+                    cmd.Parameters.AddWithValue("@IdEstado", (object)idEstado ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@NombreDueno", (object)nombreDueno ?? DBNull.Value);
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -138,7 +130,7 @@ namespace ProyectoVeterinaria_DSW1.DAO
                             temporal.Add(new DetalleCitaViewModel
                             {
                                 idcita = (int)dr["IdCita"],
-                                fechacita = (DateTime)dr["FechaCita"],
+                                fechacita = Convert.ToDateTime(dr["FechaCita"]),
                                 horacita = dr.GetTimeSpan(dr.GetOrdinal("HoraCita")),
                                 estado = dr["Estado"].ToString(),
                                 especie = dr["Especie"].ToString(),

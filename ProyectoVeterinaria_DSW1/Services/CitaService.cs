@@ -112,9 +112,9 @@ namespace ProyectoVeterinaria_DSW1.Services
         }
 
         //----------------------------------------------
-        public IEnumerable<DetalleCitaViewModel> ListarCitasPorVeterinario(int idVeterinario, int? idEstado)
+        public IEnumerable<DetalleCitaViewModel> ListarCitasPorVeterinario(int idVeterinario, int? idEstado, string nombreDueno)
         {
-            return _cita.ListarCitasPorVeterinario(idVeterinario, idEstado);
+            return _cita.ListarCitasPorVeterinario(idVeterinario, idEstado, nombreDueno);
         }
 
         public DetalleCita VerDetalleCita(int idCita)
