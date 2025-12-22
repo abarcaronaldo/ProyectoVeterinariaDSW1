@@ -21,7 +21,6 @@ namespace ProyectoVeterinaria_DSW1.Models
         public TimeSpan HoraFin { get; set; }
 
         [Required(ErrorMessage = "El cupo máximo es obligatorio.")]
-        [Range(0, 10, ErrorMessage = "El cupo debe estar entre 0 y 10.")]
         public int CupoMaximo { get; set; }
 
         public int CupoDisponible { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using ProyectoVeterinaria_DSW1.Models;
 using ProyectoVeterinaria_DSW1.Repository;
+using ProyectoVeterinaria_DSW1.ViewsModel;
 using System.Data;
 
 namespace ProyectoVeterinaria_DSW1.DAO
@@ -77,6 +78,26 @@ namespace ProyectoVeterinaria_DSW1.DAO
         public IEnumerable<Veterinario> listado()
         {
             throw new NotImplementedException();
+        }
+
+        public ResumenVeterinarioViewModel ObtenerResumen(int idVeterinario)
+        {
+            ResumenVeterinarioViewModel resumen = new ResumenVeterinarioViewModel();
+            using (SqlConnection cn = new SqlConnection(cadena))
+            {
+                SqlCommand cmd = new SqlCommand("sp_ObtenerResumenCitasVeterinario", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
+                cn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    resumen.CitasHoy = Convert.ToInt32(dr["CitasHoy"]);
+                    resumen.CitasPendientes = Convert.ToInt32(dr["CitasPendientes"]);
+                    resumen.CitasAtendidas = Convert.ToInt32(dr["CItasAtendidas"]);
+                }
+            }
+            return resumen;
         }
 
         public Veterinario ObtenerVeterinarioPorId(int idVeterinario)

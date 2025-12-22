@@ -1,5 +1,6 @@
 ﻿using NuGet.Protocol.Core.Types;
 using ProyectoVeterinaria_DSW1.Constants;
+using ProyectoVeterinaria_DSW1.DAO;
 using ProyectoVeterinaria_DSW1.Models;
 using ProyectoVeterinaria_DSW1.Repository;
 using ProyectoVeterinaria_DSW1.ViewsModel;
@@ -128,6 +129,28 @@ namespace ProyectoVeterinaria_DSW1.Services
         public DetalleCitaViewModel ObtenerCitaPorId(int idCita)
         {
             return _cita.ObtenerCitaPorId(idCita);
+        }
+
+        //-----REPORTE CITA SEMANAL
+        public Paginado<ReporteCitaSemanalVM> ObtenerReporteSemana(int idVeterinario,DateOnly fecha, int page, int pageSize)
+        {
+            return _cita.ReporteCitaSemana(
+                idVeterinario,
+                fecha,
+                page,
+                pageSize
+            );
+        }
+
+        public Paginado<ReporteCitaSemanalVM> ObtenerReporteMensual(int idVeterinario, DateOnly fechaInicio, DateOnly fechaFin, int page, int pageSize)
+        {
+            return _cita.ReporteCitaMes(
+                idVeterinario,
+                fechaInicio,
+                fechaFin,
+                page,
+                pageSize
+            );
         }
 
     }

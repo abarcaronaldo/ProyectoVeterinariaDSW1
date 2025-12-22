@@ -257,6 +257,92 @@ namespace ProyectoVeterinaria_DSW1.DAO
             return idGenerado;
         }
 
+        //-------METODO REPORTE CITA MENSUAL
+        public Paginado<ReporteCitaSemanalVM> ReporteCitaMes(int idVeterinario, DateOnly fechaInicio, DateOnly fechaFin, int page, int pageSize)
+        {
+            var resultado = new Paginado<ReporteCitaSemanalVM>();
+
+            using SqlConnection cn = new SqlConnection(cadena);
+            using SqlCommand cmd = new SqlCommand(
+                "sp_ReporteCitasRangoVeterinario", cn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
+            cmd.Parameters.AddWithValue("@FechaInicio",
+                fechaInicio.ToDateTime(TimeOnly.MinValue));
+            cmd.Parameters.AddWithValue("@FechaFin",
+                fechaFin.ToDateTime(TimeOnly.MinValue));
+            cmd.Parameters.AddWithValue("@PageNumber", page);
+            cmd.Parameters.AddWithValue("@PageSize", pageSize);
+
+            cn.Open();
+            using SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.Read())
+            {
+                resultado.Total = dr.GetInt32(0);
+            }
+
+            dr.NextResult();
+            while (dr.Read())
+            {
+                resultado.Items.Add(new ReporteCitaSemanalVM
+                {
+                    IdCita = dr.GetInt32(0),
+                    FechaCita = DateOnly.FromDateTime(dr.GetDateTime(1)),
+                    HoraCita = dr.GetTimeSpan(2),
+                    Motivo = dr.IsDBNull(3) ? null : dr.GetString(3),
+                    IdEstado = dr.GetInt32(4),
+                    Mascota = dr.GetString(5),
+                    Dueno = dr.GetString(6)
+                });
+            }
+
+            return resultado;
+        }
+
+        //----METODO REPORTE CITAS POR SEMANA
+        public Paginado<ReporteCitaSemanalVM> ReporteCitaSemana(int idVeterinario, DateOnly fechaReferencia, int page, int pageSize)
+        {
+            var resultado = new Paginado<ReporteCitaSemanalVM>();
+
+            using SqlConnection cn = new SqlConnection(cadena);
+            using SqlCommand cmd = new SqlCommand(
+                "sp_ReporteCitasSemanaVeterinario", cn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdVeterinario", idVeterinario);
+            cmd.Parameters.AddWithValue("@FechaReferencia",
+                fechaReferencia.ToDateTime(TimeOnly.MinValue));
+            cmd.Parameters.AddWithValue("@PageNumber", page);
+            cmd.Parameters.AddWithValue("@PageSize", pageSize);
+
+            cn.Open();
+            using SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.Read())
+            {
+                resultado.Total = dr.GetInt32(0);
+            }
+
+            dr.NextResult();
+            while (dr.Read())
+            {
+                resultado.Items.Add(new ReporteCitaSemanalVM
+                {
+                    IdCita = dr.GetInt32(0),
+                    FechaCita = DateOnly.FromDateTime(dr.GetDateTime(1)),
+                    HoraCita = dr.GetTimeSpan(2),
+                    Motivo = dr.IsDBNull(3) ? null : dr.GetString(3),
+                    IdEstado = dr.GetInt32(4),
+                    Mascota = dr.GetString(5),
+                    Dueno = dr.GetString(6)
+                });
+            }
+
+            return resultado;
+        }
+
         public DetalleCita VerDetalleCita(int idCita)
         {
             DetalleCita temporal = new DetalleCita();

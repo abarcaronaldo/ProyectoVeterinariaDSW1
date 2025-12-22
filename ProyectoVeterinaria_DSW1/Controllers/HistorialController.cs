@@ -73,5 +73,16 @@ namespace ProyectoVeterinaria_DSW1.Controllers
 
             return View(modelo);
         }
+
+        //VER HISTORIA MEDICA POR ID CITA DEL DUEÑO
+        public async Task<IActionResult> VerMiHistorial(int idCita)
+        {
+            var historial = await Task.Run(()=> _historialService.ObtenerHistorialPorCita(idCita));
+
+            if (!historial.Any())
+                ViewBag.Mensaje = "Esta cita aún no tiene historial médico.";
+
+            return View(historial);
+        }
     }
 }

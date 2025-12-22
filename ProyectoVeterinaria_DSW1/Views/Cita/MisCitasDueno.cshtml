@@ -69,9 +69,23 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EstadoCita)
             </td>
-            <td>
-                @Html.ActionLink("Detalles", "BuscarCita", new { id = item.IdCita }, new { @class = "btn btn-success" })
-            </td>
+                <td>
+                    @Html.ActionLink(
+                             "Detalles",
+                             "BuscarCita",
+                             new { id = item.IdCita },
+                             new { @class = "btn btn-success btn-sm me-1" }
+                             )
+
+                    @Html.ActionLink(
+                             "Historial",
+                             "VerMiHistorial",
+                             "Historial",
+                             new { idCita = item.IdCita },
+                             new { @class = "btn btn-outline-primary btn-sm" }
+                             )
+                </td>
+
         </tr>
 }
     </tbody>

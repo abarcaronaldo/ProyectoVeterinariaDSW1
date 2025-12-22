@@ -200,7 +200,7 @@ namespace ProyectoVeterinaria_DSW1.Controllers
                 return RedirectToAction("Login", "Login");
 
             TempData["Mensaje"] = _cita.Actualizar(model, idDueno);
-            return RedirectToAction("MisCitas");
+            return RedirectToAction("MisCitasDueno");
         }
 
         //------------------------------------------------

@@ -88,5 +88,41 @@ namespace ProyectoVeterinaria_DSW1.DAO
             }
             return lista;
         }
+
+        //VER HISTORIAL MEDICA POR ID CITA DE LAS CITAS DEL DUEÑO
+        public IEnumerable<HistorialMedico> VerMiHistorialMedico(int idCita)
+        {
+            var lista = new List<HistorialMedico>();
+
+            using (SqlConnection cn = new SqlConnection(cadena))
+            using (SqlCommand cmd = new SqlCommand("sp_ObtenerHistorialMedicoPorCitaDueno", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdCita", idCita);
+
+                cn.Open();
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        lista.Add(new HistorialMedico
+                        {
+                            IdHistorial = dr.GetInt32(0),
+                            IdCita = dr.GetInt32(1),
+                            IdMascota = dr.GetInt32(2),
+                            IdVeterinario = dr.GetInt32(3),
+                            Diagnostico = dr.GetString(4),
+                            Tratamiento = dr.GetString(5),
+                            Observaciones = dr.GetString(6),
+                            FechaAtencion = dr.GetDateTime(7),
+                            NombreMascota = dr.GetString(8),
+                            NombreDueno = dr.GetString(9)
+                        });
+                    }
+                }
+            }
+
+            return lista;
+        }
     }
 }

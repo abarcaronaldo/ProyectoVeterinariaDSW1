@@ -62,6 +62,7 @@ namespace ProyectoVeterinaria_DSW1.DAO
                                 DiaSemana = Convert.ToInt32(dr["DiaSemana"]),
                                 HoraInicio = (TimeSpan)dr["HoraInicio"],
                                 HoraFin = (TimeSpan)dr["HoraFin"],
+                                CupoMaximo = Convert.ToInt32(dr["CupoMaximo"]),
                                 CupoDisponible = Convert.ToInt32(dr["CupoDisponible"])
                             };
                         }

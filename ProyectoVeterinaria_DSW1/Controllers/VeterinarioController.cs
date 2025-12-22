@@ -16,17 +16,20 @@ namespace ProyectoVeterinaria_DSW1.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdVeterinario")))
+            string idVetStr = HttpContext.Session.GetString("IdVeterinario");
+            if (string.IsNullOrEmpty(idVetStr))
             {
                 return RedirectToAction("Login", "Login");
             }
 
-            //datos de pruba por el momento
-            ViewBag.CitasHoy = 4;
-            ViewBag.CitasPendientes = 2;
-            ViewBag.CitasAtendidas = 2;
+            int idVeterinario = int.Parse(idVetStr);
 
-            return await Task.Run(()=> View());
+            var resumen = await Task.Run(() => _veterinario.ObtenerResumen(idVeterinario));
+
+            ViewBag.CitasHoy = resumen.CitasHoy;
+            ViewBag.CitasPendientes = resumen.CitasPendientes;
+            ViewBag.CitasAtendidas = resumen.CitasAtendidas;
+            return View();
         }
 
         public async Task<IActionResult> AgregarVeterinario()

@@ -1,0 +1,128 @@
+﻿@using ProyectoVeterinaria_DSW1.ViewsModel
+@model List<ReporteCitaSemanalVM>
+
+@{
+    ViewData["Title"] = "Reporte de Citas";
+}
+
+<div class="container mt-4">
+
+    <!-- Encabezado del reporte -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-semibold mb-1">Reporte de Citas</h3>
+            <p class="text-muted mb-0">
+                Detalle de citas registradas según la fecha seleccionada
+            </p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            ← Regresar
+        </a>
+    </div>
+
+    <!-- Filtro -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-medium">Fecha</label>
+                    <input type="date"
+                           name="fecha"
+                           value="@ViewBag.FechaSeleccionada"
+                           class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        Buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla del reporte -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Id Cita</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Mascota</th>
+                        <th>Dueño</th>
+                        <th>Motivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var c in Model)
+                        {
+                            <tr>
+                                <td>@c.IdCita</td>
+                                <td>@c.FechaCita</td>
+                                <td>@c.HoraCita</td>
+                                <td>@c.Mascota</td>
+                                <td>@c.Dueno</td>
+                                <td>@c.Motivo</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                No se encontraron citas para la fecha seleccionada
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+@if (ViewBag.TotalRegistros > ViewBag.PageSize)
+{
+    int totalPaginas = (int)Math.Ceiling(
+        (double)ViewBag.TotalRegistros / ViewBag.PageSize
+    );
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link"
+                   asp-route-page="@(ViewBag.CurrentPage - 1)"
+                   asp-route-fecha="@ViewBag.FechaSeleccionada">
+                    Anterior
+                </a>
+            </li>
+
+            @for (int i = 1; i <= totalPaginas; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link"
+                       asp-route-page="@i"
+                       asp-route-fecha="@ViewBag.FechaSeleccionada">
+                        @i
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(ViewBag.CurrentPage == totalPaginas ? "disabled" : "")">
+                <a class="page-link"
+                   asp-route-page="@(ViewBag.CurrentPage + 1)"
+                   asp-route-fecha="@ViewBag.FechaSeleccionada">
+                    Siguiente
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+}
+

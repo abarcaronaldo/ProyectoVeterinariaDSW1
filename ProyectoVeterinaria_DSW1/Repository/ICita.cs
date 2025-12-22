@@ -16,5 +16,9 @@ namespace ProyectoVeterinaria_DSW1.Repository
         int ActualizarEstadoCita(int idCita, int nuevoIdEstado);
         public DetalleCitaViewModel ObtenerCitaPorId(int idCita);
 
+        //----REPORTE--------------
+        Paginado<ReporteCitaSemanalVM> ReporteCitaSemana(int idVeterinario, DateOnly fechaReferencia, int page, int pageSize);
+        Paginado<ReporteCitaSemanalVM> ReporteCitaMes(int idVeterinario, DateOnly fechaInicio, DateOnly fechaFin, int page, int pageSize);
+
     }
 }

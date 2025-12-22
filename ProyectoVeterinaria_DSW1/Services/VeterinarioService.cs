@@ -58,5 +58,10 @@ namespace ProyectoVeterinaria_DSW1.Services
             catch (Exception ex) { mensaje = ex.Message; }
             return mensaje;
         }
+
+        public ResumenVeterinarioViewModel ObtenerResumen(int idVeterinario)
+        {
+            return _veterinario.ObtenerResumen(idVeterinario);
+        }
     }
 }

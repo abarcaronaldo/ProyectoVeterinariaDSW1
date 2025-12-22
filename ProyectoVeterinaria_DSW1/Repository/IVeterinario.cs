@@ -1,4 +1,5 @@
 ﻿using ProyectoVeterinaria_DSW1.Models;
+using ProyectoVeterinaria_DSW1.ViewsModel;
 
 namespace ProyectoVeterinaria_DSW1.Repository
 {
@@ -6,5 +7,6 @@ namespace ProyectoVeterinaria_DSW1.Repository
     {
         //agregar metodo especiales si se requieren
         Veterinario ObtenerVeterinarioPorId(int idVeterinario);
+        ResumenVeterinarioViewModel ObtenerResumen(int idVeterinario);
     }
 }

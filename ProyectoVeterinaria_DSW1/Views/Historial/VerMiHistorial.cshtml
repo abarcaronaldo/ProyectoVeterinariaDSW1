@@ -1,0 +1,73 @@
+﻿@using ProyectoVeterinaria_DSW1.Models
+@model List<HistorialMedico>
+
+
+@{
+    ViewData["Title"] = "Historial Médico";
+}
+
+<div class="container mt-4">
+
+    <h3 class="mb-4 text-primary">
+        <i class="bi bi-clipboard-heart"></i> Historial Médico
+    </h3>
+
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-info">
+            @ViewBag.Mensaje
+        </div>
+    }
+    else
+    {
+        @foreach (var item in Model)
+        {
+            <div class="card shadow-sm mb-4 border-0">
+
+                <div class="card-header bg-light">
+                    <strong>Fecha de Atención:</strong>
+                    @item.FechaAtencion.ToString("dd/MM/yyyy HH:mm")
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Datos del paciente -->
+                    <div class="mb-3">
+                        <h6 class="text-secondary mb-2">Datos del Paciente</h6>
+                        <p class="mb-1"><strong>Mascota:</strong> @item.NombreMascota</p>
+                        <p class="mb-1"><strong>Dueño:</strong> @item.NombreDueno</p>
+                    </div>
+
+                    <hr />
+
+                    <!-- Información médica -->
+                    <div class="mb-3">
+                        <h6 class="text-secondary">Diagnóstico</h6>
+                        <p class="text-justify">@item.Diagnostico</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h6 class="text-secondary">Tratamiento</h6>
+                        <p class="text-justify">@item.Tratamiento</p>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(item.Observaciones))
+                    {
+                        <div class="mb-3">
+                            <h6 class="text-secondary">Observaciones</h6>
+                            <p class="text-justify">@item.Observaciones</p>
+                        </div>
+                    }
+                </div>
+
+                <div class="card-footer text-muted small">
+                    Veterinario responsable ID: @item.IdVeterinario
+                </div>
+            </div>
+        }
+    }
+
+    <a asp-action="MisCitasDueno" asp-controller="Cita" class="btn btn-outline-secondary">
+        ← Volver a Citas
+    </a>
+</div>
